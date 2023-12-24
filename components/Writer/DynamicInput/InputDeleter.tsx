@@ -23,7 +23,7 @@ interface InputSelectorProps {
     return (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="ghost">
+          <Button variant="ghost" className="p-1">
                     <Trash2 />
                 </Button>
         </AlertDialogTrigger>

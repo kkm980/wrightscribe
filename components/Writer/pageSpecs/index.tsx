@@ -23,8 +23,10 @@ interface PageSpecsProps {
   // Add any necessary props here
   supportingLang: any;
   setSupportingLang: any;
+  slug: any;
+  setSlug: any;
 }
-const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang}) => {
+const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang, slug, setSlug}) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleOpenDialog = () => {
@@ -38,7 +40,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang}
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger>
-          <DialogueBox onClick={()=>{handleOpenDialog}}/>
+          <DialogueBox onClick={()=>{handleOpenDialog}} supportingLang={supportingLang} setSupportingLang={setSupportingLang} slug={slug} setSlug={setSlug}/>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

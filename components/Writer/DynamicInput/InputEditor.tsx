@@ -52,7 +52,7 @@ const InputSelector: React.FC<InputSelectorProps> = ({ setInputList, inputList, 
     return (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-                <Button variant="ghost" onClick={handleOpenDialog}>
+                <Button variant="ghost" className="p-1" onClick={handleOpenDialog}>
                     <Settings />
                 </Button>
             </DialogTrigger>

@@ -60,6 +60,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ inputList, setInput
                             {/* <div className='absolute text-sm -top-3 right-2'>Text-area</div> */}
                             <div className='hidden group-hover:block cursor-pointer'>
                               <Button variant="ghost"
+                              className='p-1'
                                 onClick={() => {
                                   setInputList((prevInputList: any) => {
                                     const updatedInputs = [...prevInputList];

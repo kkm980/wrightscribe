@@ -48,7 +48,7 @@ export const CheckboxReactHookFormMultiple: React.FC<InputSelectorCardProps> = (
                     render={() => (
                         <FormItem>
                             <div className="mb-0 flex justify-between">
-                                <FormLabel className="text-base mb-0 pb-0">Text types</FormLabel>
+                                <FormLabel className="text-base mb-0 pb-0">{selectedTextValue} {selectedTextValue !="text"? "text":""} types</FormLabel>
                                 <div className="flex">
                                     {availableTextTypes.length !== selectedType.length?<Badge className="mr-1 bg-cyan-800 hover:bg-cyan-600 cursor-pointer"
                                     onClick={()=>{setSelectedType([...availableTextTypes])}}
