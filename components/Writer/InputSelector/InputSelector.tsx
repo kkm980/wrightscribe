@@ -33,7 +33,7 @@ const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput }) => {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={handleOpenDialog}>
+        <Button variant="outline" onClick={handleOpenDialog} className="z-10 relative">
           Create field
         </Button>
       </DialogTrigger>

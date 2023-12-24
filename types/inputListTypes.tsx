@@ -10,9 +10,9 @@ type TextInput = {
 };
 
 type FileInput = {
-    type: "file";
+    type: "image";
     text: string;
-    subTextType: TextType[];
+    textType: TextType[];
     id: string;
 };
 
@@ -56,5 +56,5 @@ type UlInput = {
     id: string;
 };
 
-export type Input = TextInput;
+export type Input = TextInput | LinkInput | QuoteInput | FileInput;
 // | FileInput | QuoteInput | LinkInput | SpaceInput | BreakInput | OlInput | UlInput

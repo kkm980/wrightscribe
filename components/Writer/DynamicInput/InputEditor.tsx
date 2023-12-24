@@ -57,7 +57,7 @@ const InputSelector: React.FC<InputSelectorProps> = ({ setInputList, inputList, 
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-                <InputSelectorCard {...{ handleSubmit, handleCloseDialog, type: el.type, textType: el.textType, isEditing: true }} />
+                <InputSelectorCard {...{ handleSubmit, handleCloseDialog, el, isEditing: true }} />
             </DialogContent>
         </Dialog>
     );

@@ -5,6 +5,8 @@ function textTypeGenerator(type: string){
     return ["bold", "italic", "striken", "small", "cursive"];
   } else if(type === "link"){
     return ["bold", "italic", "small", "cursive", "background", "underlined"];
+  } else if(type === "image"){
+    return ["bold", "italic", "striken", "small", "background", "cursive"];
   } else {
     return [];
   }

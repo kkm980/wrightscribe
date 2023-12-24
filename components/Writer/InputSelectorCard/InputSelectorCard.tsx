@@ -24,32 +24,37 @@ import textTypeGenerator from "@/utils/textTypeGenerator";
 interface InputSelectorCardProps {
   handleSubmit: any;
   handleCloseDialog: () => void;
-  type?:string;
-  textType?:string;
-  isEditing?:boolean;
+  el?:any;
+  isEditing?: boolean;
+
 }
 
 const InputSelectorCard: React.FC<InputSelectorCardProps> = ({
   handleSubmit,
   handleCloseDialog,
-  type,
-  textType,
+  el,
   isEditing
 }) => {
-  const [selectedTextValue, setSelectedTextValue] = useState<string>(type||'');
-  const [selectedType, setSelectedType] = useState<any>(textType||[]);
+  const [selectedTextValue, setSelectedTextValue] = useState<string>(el?.type || '');
+  const [selectedType, setSelectedType] = useState<any>(el?.textType || []);
+  // const [selectedType, setSelectedType] = useState<any>(el?.textType || []);
   const [availableTextTypes, setAvailableTextTypes] = useState<any>([]);
   const handleSelectChange = (value: string) => {
     setSelectedTextValue(value);
   };
-  useEffect(()=>{
+  useEffect(() => {
     setAvailableTextTypes(textTypeGenerator(selectedTextValue));
-  },[selectedTextValue]);
+  }, [selectedTextValue]);
+
+  const handleClick=()=>{
+    const newObj = {type:selectedTextValue, textType:selectedType}
+    handleSubmit(newObj);
+  }
 
   return (
     <Card className="w-[350px] border-0">
       <CardHeader>
-        <CardTitle>{isEditing?"Edit this field":"Create a field"}</CardTitle>
+        <CardTitle>{isEditing ? "Edit this field" : "Create a field"}</CardTitle>
       </CardHeader>
       <CardContent>
         <form>
@@ -62,38 +67,22 @@ const InputSelectorCard: React.FC<InputSelectorCardProps> = ({
                 </SelectTrigger>
                 <SelectContent position="popper">
                   {inputTypes.map((e) => (
-                    <SelectItem key={e.value} value={e.value}>
+                    <SelectItem
+                    key={e.value}
+                    value={e.value}
+                    disabled={e.comingSoon===true}
+                    className={`cursor-${e.comingSoon ? 'not-allowed' : 'pointer'} flex justify-start items-center`}
+                    >
                       {e.label}
+                      <span className="ml-4 text-rose-300">{e.comingSoon && "coming soon"}</span>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-
-            {/* {selectedValue === "text" && (
+            {availableTextTypes.length > 0 && (
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="framework">Framework</Label>
-                <Select
-                  value={selectedType}
-                  onValueChange={(value) => setSelectedType([...selectedType, value])}
-                >
-                  <SelectTrigger id="framework">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    {textTypes.map((e) => (
-                      <SelectItem key={e.value} value={e.value}>
-                        {e.label}
-                      </SelectItem>
-                    ))}
-                    
-                  </SelectContent>
-                </Select>
-              </div>
-            )} */}
-            {selectedTextValue === "text" && (
-              <div className="flex flex-col space-y-1.5">
-                <CheckboxReactHookFormMultiple {...{availableTextTypes, selectedTextValue, setSelectedType, selectedType}}/>
+                <CheckboxReactHookFormMultiple {...{ availableTextTypes, selectedTextValue, setSelectedType, selectedType }} />
               </div>
             )}
           </div>
@@ -103,10 +92,9 @@ const InputSelectorCard: React.FC<InputSelectorCardProps> = ({
         <Button variant="outline" onClick={handleCloseDialog}>
           Cancel
         </Button>
-        <Button onClick={() => isEditing?handleSubmit({type:selectedTextValue, textType:selectedType}):
-           handleSubmit({type:selectedTextValue, textType:selectedType, id:`${Math.random()}`})
-        }>
-        {isEditing?"Done":"Create"}
+        <Button onClick={() => {handleClick()}}
+        >
+          {isEditing ? "Done" : "Create"}
         </Button>
       </CardFooter>
     </Card>

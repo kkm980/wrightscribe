@@ -2,8 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, UseFormReturn } from "react-hook-form";
 import * as z from "zod";
-
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -23,9 +21,11 @@ const FormSchema = z.object({
 
 interface CheckboxWrapperProps {
   form: UseFormReturn<z.infer<typeof FormSchema>>;
+  supportingLang: any;
+  setSupportingLang: any;
 }
 
-const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form }) => {
+const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang, setSupportingLang}) => {
 
   return (
     <Form {...form}>
@@ -48,15 +48,16 @@ const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form }) => {
                       >
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(item.id)}
+                            checked={item.default===true? true:supportingLang.includes(item.id)}
+                            disabled={item.default===true}
                             onCheckedChange={(checked) => {
                               return checked
-                                ? field.onChange([...field.value, item.id])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== item.id
-                                    )
-                                  );
+                                ? setSupportingLang([...supportingLang, item.id])
+                                : setSupportingLang(
+                                  supportingLang.filter(
+                                    (value:any) => value !== item.id
+                                  )
+                                );
                             }}
                           />
                         </FormControl>
@@ -73,13 +74,16 @@ const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form }) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
 };
 
-export default function CheckboxWrapperContainer() {
+interface ContainerProps {
+  supportingLang: any;
+   setSupportingLang: any;
+}
+const CheckboxWrapperContainer: React.FC<ContainerProps> = ({ supportingLang, setSupportingLang}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -87,5 +91,7 @@ export default function CheckboxWrapperContainer() {
     },
   });
 
-  return <CheckboxWrapper form={form} />;
+  return <CheckboxWrapper {...{form, supportingLang, setSupportingLang}} />;
 }
+
+export default CheckboxWrapperContainer;

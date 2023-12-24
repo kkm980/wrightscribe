@@ -11,6 +11,8 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { Badge } from "@/components/ui/badge";
+
 
 interface InputSelectorCardProps {
     availableTextTypes: string[];
@@ -45,8 +47,18 @@ export const CheckboxReactHookFormMultiple: React.FC<InputSelectorCardProps> = (
                     name="selectedTypes"
                     render={() => (
                         <FormItem>
-                            <div className="mb-0">
-                                <FormLabel className="text-base mb-0 pb-0">Choose text types</FormLabel>
+                            <div className="mb-0 flex justify-between">
+                                <FormLabel className="text-base mb-0 pb-0">Text types</FormLabel>
+                                <div className="flex">
+                                    {availableTextTypes.length !== selectedType.length?<Badge className="mr-1 bg-cyan-800 hover:bg-cyan-600 cursor-pointer"
+                                    onClick={()=>{setSelectedType([...availableTextTypes])}}
+                                  >Select All</Badge> :<></>}
+                                  
+                                  {selectedType.length!==0 ?<Badge variant="destructive" className="cursor-pointer"
+                                    onClick={()=>{setSelectedType([])}}
+                                  >Remove All</Badge>:<></>}
+                                  
+                                </div>
                             </div>
                             <div className="flex justify-start items-start border flex-wrap rounded-lg p-1 mt-0">
                                 {availableTextTypes.map((textType) => (

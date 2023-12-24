@@ -14,6 +14,7 @@ const languages = [
     {
       id: "english",
       label: "English",
+      default: true,
     },
     {
       id: "french",

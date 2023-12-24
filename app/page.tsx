@@ -18,11 +18,11 @@ const Home: React.FC<HomeProps> = () => {
   const { theme, setTheme } = useTheme();
   const [inputList, setInputList] = useState<Input[]>([]);
   const [inputType, setInputType] = useState<string>('text');
-
+  const [supportingLang, setSupportingLang] = useState<string[]>(["english"]);
   const handleAddInput = (obj: any): void => {
     setInputList((prevInputList) => [
       ...prevInputList,
-      {...obj} as Input, // Explicitly cast to TextInput
+      {...obj, id: `${Math.random()}`} as Input, // Explicitly cast to TextInput
     ]);
   };
   // const handleInputChange = (index: number, value: string): void => {
@@ -32,7 +32,6 @@ const Home: React.FC<HomeProps> = () => {
   //     return updatedInputs;
   //   });
   // };
-
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
@@ -41,8 +40,8 @@ const Home: React.FC<HomeProps> = () => {
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
       <NavBar />
       <div className="mt-[70px] px-[10px]">
-        <PageSpecs />
-        <div className="border rounded-lg flex justify-start items-start flex-col py-4 px-1 w-[70%] shadow-2xl">
+        <PageSpecs {...{supportingLang, setSupportingLang}}/>
+        <div className="border rounded-lg flex justify-start items-start flex-col py-4 px-1 w-[70%] shadow-2xl relative">
           <DynamicInputForm {...{ inputList, setInputList, inputType, setInputType }} />
           <InputSelector {...{ handleAddInput }} />
         </div>
