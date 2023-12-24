@@ -1,0 +1,33 @@
+import React from "react";
+
+interface DialogueBoxProps {
+  // Add any necessary props here
+}
+
+const DialogueBox: React.FC<DialogueBoxProps> = () => {
+  return (
+    <div className="w-[200px] min-h-[100px]">
+      <div className="group rounded-lg border border-transparent px-1 py-1 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-left">
+        <div className={`mb-3 text-2xl font-semibold`}>
+          Page specs{' '}
+          <span className="inline-block transition-transform group-hover:translate-x-4 motion-reduce:transform-none">
+            -&gt;
+          </span>
+        </div>
+        <div className="justify-between items-center hidden group-hover:flex">
+          <div className={`m-0 max-w-[30ch] text-sm opacity-50 border-2 p-1 rounded-sm`}>
+            Slug
+          </div>
+          <div className={`m-0 max-w-[30ch] text-sm opacity-50 border-2 p-1 rounded-sm`}>
+            Languages
+          </div>
+          <div className={`m-0 max-w-[30ch] text-sm opacity-50 border-2 p-1 rounded-sm`}>
+            Learn
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DialogueBox;
