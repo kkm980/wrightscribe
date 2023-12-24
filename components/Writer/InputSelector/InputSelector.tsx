@@ -6,12 +6,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import InputSelectorCard from "../InputSelectorCard/InputSelectorCard";
+import Ping from "@/components/Common/Ping";
 
 interface InputSelectorProps {
   handleAddInput: any;
+  inputList: any;
 }
 
-const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput }) => {
+const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput, inputList }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleOpenDialog = () => {
@@ -33,9 +35,14 @@ const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput }) => {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={handleOpenDialog} className="z-10 relative">
-          Create field
-        </Button>
+        {/* <div className="relative"> */}
+          
+
+          <Button variant="outline" onClick={handleOpenDialog} className="z-10 relative">
+            {inputList.length === 0 ?<Ping/>:<></>}Create field
+          </Button>
+        {/* </div> */}
+        
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <InputSelectorCard {...{ handleSubmit, handleCloseDialog }} />

@@ -47,7 +47,7 @@ const Home: React.FC<HomeProps> = () => {
         <div className="border rounded-lg flex justify-start items-start py-4 px-1 w-[70%] shadow-2xl relative">
           <div className='flex flex-col justify-start items-start w-[100%]'>
             <DynamicInputForm {...{ inputList, setInputList, inputType, setInputType }} />
-            <InputSelector {...{ handleAddInput }} />
+            <InputSelector {...{ handleAddInput, inputList }} />
           </div>
           {
             inputList.length > 0 ? <div className='sticky top-[80px] right-[0px] flex flex-col'>

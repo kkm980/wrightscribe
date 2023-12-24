@@ -62,6 +62,8 @@ const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang,
                 id="slug"
                 placeholder="Write Slug name"
                 className="col-span-3"
+                value={slug}
+                onChange={(e)=>{setSlug(e.target.value)}}
               />
             </div>
             <div className="flex flex-col justify-start items-start">

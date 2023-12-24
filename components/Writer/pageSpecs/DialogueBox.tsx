@@ -1,3 +1,4 @@
+import Ping from "@/components/Common/Ping";
 import React, { useEffect } from "react";
 
 interface DialogueBoxProps {
@@ -23,11 +24,11 @@ const DialogueBox: React.FC<DialogueBoxProps> = ({onClick, supportingLang, setSu
           </span>
         </div>
         <div className="justify-start items-center hidden group-hover:flex">
-          <div className={`m-0 max-w-[30ch] text-sm opacity-50 border-2 p-1 rounded-sm ${supportingLang.length===1?"animate-bounce":""}`}>
-            Languages
+          <div className={`m-0 max-w-[30ch] text-sm opacity-50 border-2 p-1 rounded-sm flex`}>
+            Languages {supportingLang.length===1?<Ping/>:<></>}
           </div>
-          <div className={`m-0 max-w-[30ch] text-sm opacity-50 border-2 p-1 rounded-sm ${slug.length===0?"animate-bounce":""}`}>
-            Slug
+          <div className={`m-0 max-w-[30ch] text-sm opacity-50 border-2 p-1 rounded-sm flex`}>
+            Slug {slug.length===0?<Ping/>:<></>}
           </div>
         </div>
       </div>
