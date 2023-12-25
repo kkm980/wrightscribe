@@ -8,6 +8,7 @@ import PageSpecs from '@/components/Writer/pageSpecs';
 import NavBar from '@/components/navBar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/types/inputListTypes';
+import multiLangListCreator from '@/utils/multiLangListCreator';
 import { useTheme } from 'next-themes';
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
@@ -17,18 +18,29 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = () => {
+
   const { theme, setTheme } = useTheme();
   const [inputList, setInputList] = useState<Input[]>([]);
   const [inputType, setInputType] = useState<string>('text');
   const [supportingLang, setSupportingLang] = useState<string[]>(["english"]);
   const [multiLang, setMultiLang] = useState<boolean>(false);
+  const [multiLangInputList, setMultiLangInputList] = useState<any>([]);
   const [slug, setSlug] = useState<any>("");
+
   const handleAddInput = (obj: any): void => {
     setInputList((prevInputList) => [
       ...prevInputList,
       { ...obj, id: `${Math.random()}` } as Input, // Explicitly cast to TextInput
     ]);
   };
+
+  useEffect(()=>{
+    multiLang===true && setMultiLangInputList(multiLangListCreator(inputList, supportingLang));
+    multiLang===false && setMultiLangInputList([]);
+  },[inputList, supportingLang, multiLang]);
+  useEffect(()=>{
+    console.log(multiLangInputList, "multiLang");
+  },[multiLangInputList]);
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
@@ -41,7 +53,7 @@ const Home: React.FC<HomeProps> = () => {
         <PageSpecs {...{ supportingLang, setSupportingLang, slug, setSlug }} />
         <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${inputList.length>0?"border shadow-2xl":"shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
-            <DynamicInputForm {...{ inputList, setInputList, inputType, setInputType }} />
+            <DynamicInputForm {...{multiLangInputList, inputList, setInputList, inputType, setInputType }} />
             <InputSelector {...{ handleAddInput, inputList }} />
           </div>
           {
