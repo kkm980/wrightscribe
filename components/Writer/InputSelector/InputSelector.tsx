@@ -39,7 +39,7 @@ const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput, inputList
           
 
           <Button variant="outline" onClick={handleOpenDialog} className="z-10 relative">
-            {inputList.length === 0 ?<Ping/>:<></>}Create field
+            Create field{" "}{inputList.length === 0 ?<div className="ml-1 absolute right-0 -top-1"><Ping/></div>:<></>}
           </Button>
         {/* </div> */}
         

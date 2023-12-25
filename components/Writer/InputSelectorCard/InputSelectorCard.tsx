@@ -92,10 +92,13 @@ const InputSelectorCard: React.FC<InputSelectorCardProps> = ({
         <Button variant="outline" onClick={handleCloseDialog}>
           Cancel
         </Button>
-        <Button onClick={() => {handleClick()}}
+        {selectedTextValue.length>0 && 
+        <Button onClick={() => {selectedTextValue.length>0 && handleClick()}}
         >
           {isEditing ? "Done" : "Create"}
         </Button>
+        }
+        
       </CardFooter>
     </Card>
   );

@@ -44,7 +44,7 @@ const Home: React.FC<HomeProps> = () => {
       <NavBar />
       <div className="mt-[70px] px-[10px]">
         <PageSpecs {...{ supportingLang, setSupportingLang, slug, setSlug }} />
-        <div className="border rounded-lg flex justify-start items-start py-4 px-1 w-[70%] shadow-2xl relative">
+        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${inputList.length>0?"border shadow-2xl":"shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
             <DynamicInputForm {...{ inputList, setInputList, inputType, setInputType }} />
             <InputSelector {...{ handleAddInput, inputList }} />

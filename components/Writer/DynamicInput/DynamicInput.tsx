@@ -172,8 +172,31 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ inputList, setInput
                               </div>
                             </div>
                             :
-                            
-                            null
+                                el.type === "space" ?
+                                  <div className="group flex justify-between items-start w-[65%] m-2 mb-4 h-[40px] rounded-lg border-2 relative">
+                                    <div className='absolute text-sm -top-3 left-2 hidden group-hover:block'>{index + 1} Space</div>
+                                    <div
+                                      className='border-1 m-2 w-[65%]'
+                                    />
+                                    <div className='hidden group-hover:block cursor-pointer'>
+                                      <Button variant="ghost"
+                                        onClick={() => {
+                                          setInputList((prevInputList: any) => {
+                                            const updatedInputs = [...prevInputList];
+                                            updatedInputs.push({ ...el, id: `${Math.random()}` });
+                                            return updatedInputs;
+                                          });
+                                        }}
+                                      >
+                                        <BookCopy />
+                                      </Button>
+                                      <InputEditor {...{ setInputList, inputList, el, index }} />
+                                      <InputDeleter {...{ setInputList, inputList, el, index }} />
+                                    </div>
+                                  </div>
+                                  :
+
+                                  null
                       }
                     </li>
                   )}
