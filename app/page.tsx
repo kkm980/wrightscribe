@@ -21,6 +21,7 @@ const Home: React.FC<HomeProps> = () => {
   const [inputList, setInputList] = useState<Input[]>([]);
   const [inputType, setInputType] = useState<string>('text');
   const [supportingLang, setSupportingLang] = useState<string[]>(["english"]);
+  const [multiLang, setMultiLang] = useState<boolean>(false);
   const [slug, setSlug] = useState<any>("");
   const handleAddInput = (obj: any): void => {
     setInputList((prevInputList) => [
@@ -28,13 +29,7 @@ const Home: React.FC<HomeProps> = () => {
       { ...obj, id: `${Math.random()}` } as Input, // Explicitly cast to TextInput
     ]);
   };
-  // const handleInputChange = (index: number, value: string): void => {
-  //   setInputList((prevInputList) => {
-  //     const updatedInputs = [...prevInputList];
-  //     updatedInputs[index].text = value;
-  //     return updatedInputs;
-  //   });
-  // };
+
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
@@ -51,7 +46,7 @@ const Home: React.FC<HomeProps> = () => {
           </div>
           {
             inputList.length > 0 ? <div className='sticky top-[80px] right-[0px] flex flex-col'>
-              <MultiLangSelector/>
+              <MultiLangSelector {...{multiLang, setMultiLang}}/>
               <Button variant="save" className='mb-2'>Save</Button>
               <Button variant="copy" className='mb-2'>Clone</Button>
               <Button variant="delete" className='mb-2'>Delete</Button>
