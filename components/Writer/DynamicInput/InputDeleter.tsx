@@ -14,12 +14,12 @@ import {
 
 
 interface InputSelectorProps {
-  setInputList: any;
-  inputList: any;
+  setMultiLangInputList: any;
+  multiLangInputList: any;
   el: any;
   index: any;
 }
-  const InputDeleter: React.FC<InputSelectorProps> = ({ setInputList, inputList, el, index }) => {
+  const InputDeleter: React.FC<InputSelectorProps> = ({ setMultiLangInputList, multiLangInputList, el, index }) => {
     return (
       <AlertDialog>
         <AlertDialogTrigger asChild>
@@ -40,7 +40,7 @@ interface InputSelectorProps {
             </AlertDialogCancel>
             <AlertDialogAction
             onClick={()=>{
-                setInputList((prevInputList: any) => {
+              setMultiLangInputList((prevInputList: any) => {
                     const updatedInputs = prevInputList.filter((_:any, i: number) => i !== index);
                     return updatedInputs;
                   });

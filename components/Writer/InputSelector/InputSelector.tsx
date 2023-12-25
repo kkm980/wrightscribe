@@ -10,10 +10,10 @@ import Ping from "@/components/Common/Ping";
 
 interface InputSelectorProps {
   handleAddInput: any;
-  inputList: any;
+  multiLangInputList: any;
 }
 
-const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput, inputList }) => {
+const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput, multiLangInputList }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleOpenDialog = () => {
@@ -39,7 +39,7 @@ const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput, inputList
           
 
           <Button variant="outline" onClick={handleOpenDialog} className="z-10 relative">
-            Create field{" "}{inputList.length === 0 ?<div className="ml-1 absolute right-0 -top-1"><Ping/></div>:<></>}
+            Create field{" "}{multiLangInputList.length === 0 ?<div className="ml-1 absolute right-0 -top-1"><Ping/></div>:<></>}
           </Button>
         {/* </div> */}
         

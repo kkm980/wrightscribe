@@ -9,13 +9,13 @@ import InputSelectorCard from "../InputSelectorCard/InputSelectorCard";
 import { Settings } from "lucide-react";
 
 interface InputSelectorProps {
-    setInputList: any;
-    inputList: any;
+    setMultiLangInputList: any;
+    multiLangInputList: any;
     el: any;
     index: any;
 }
 
-const InputSelector: React.FC<InputSelectorProps> = ({ setInputList, inputList, el, index }) => {
+const InputSelector: React.FC<InputSelectorProps> = ({ setMultiLangInputList, multiLangInputList, el, index }) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const handleOpenDialog = () => {
@@ -30,8 +30,8 @@ const InputSelector: React.FC<InputSelectorProps> = ({ setInputList, inputList, 
         // Handle the form submission logic here
         // ...
         // Close the dialog after submitting
-        setInputList((prevInputList: any) => {
-            const updatedInputs = [...prevInputList];
+        setMultiLangInputList((prevMultipleLangInputList: any) => {
+            const updatedInputs = [...prevMultipleLangInputList];
             if (
 
                 updatedInputs[index].type === "text" &&
@@ -44,6 +44,13 @@ const InputSelector: React.FC<InputSelectorProps> = ({ setInputList, inputList, 
             }
             updatedInputs[index].textType = obj.textType;
             updatedInputs[index].type = obj.type;
+            let anArr=updatedInputs[index].multiLangText;
+            anArr = anArr.map((langObj: any) => ({
+                ...langObj,
+                textType:obj.textType,
+                type:obj.type
+            }));
+            updatedInputs[index].multiLangText=anArr;
             return updatedInputs;
         });
         handleCloseDialog();
