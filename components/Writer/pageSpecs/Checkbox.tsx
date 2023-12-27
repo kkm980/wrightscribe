@@ -23,9 +23,12 @@ interface CheckboxWrapperProps {
   form: UseFormReturn<z.infer<typeof FormSchema>>;
   supportingLang: any;
   setSupportingLang: any;
+  addLangInMultiLangArr: any;
+  potentialDeleteLangInMultiLangArr: any;
 }
 
-const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang, setSupportingLang}) => {
+const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr }) => {
+  
 
   return (
     <Form {...form}>
@@ -48,18 +51,17 @@ const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang,
                       >
                         <FormControl>
                           <Checkbox
-                            checked={item.default===true? true:supportingLang.includes(item.id)}
-                            disabled={item.default===true}
+                            checked={item.default === true ? true : supportingLang.includes(item.id)}
+                            disabled={item.default === true}
                             onCheckedChange={(checked) => {
                               return checked
-                                ? setSupportingLang([...supportingLang, item.id])
+                                ? (setSupportingLang([...supportingLang, item.id]), addLangInMultiLangArr(item.id))
                                 : setSupportingLang(
-                                  supportingLang.filter(
-                                    (value:any) => value !== item.id
-                                  )
+                                  supportingLang.filter((value: any) => value !== item.id), potentialDeleteLangInMultiLangArr(item.id)
                                 );
                             }}
                           />
+
                         </FormControl>
                         <FormLabel className="font-normal cursor-pointer">
                           {item.label}
@@ -81,9 +83,11 @@ const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang,
 
 interface ContainerProps {
   supportingLang: any;
-   setSupportingLang: any;
+  setSupportingLang: any;
+  addLangInMultiLangArr: any;
+  potentialDeleteLangInMultiLangArr: any;
 }
-const CheckboxWrapperContainer: React.FC<ContainerProps> = ({ supportingLang, setSupportingLang}) => {
+const CheckboxWrapperContainer: React.FC<ContainerProps> = ({supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -91,7 +95,7 @@ const CheckboxWrapperContainer: React.FC<ContainerProps> = ({ supportingLang, se
     },
   });
 
-  return <CheckboxWrapper {...{form, supportingLang, setSupportingLang}} />;
+  return <CheckboxWrapper {...{form, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr}} />;
 }
 
 export default CheckboxWrapperContainer;

@@ -7,6 +7,7 @@ type TextInput = {
   textType: TextType[];
   text: string;
   id: string;
+  show?: boolean;
 };
 
 type FileInput = {
@@ -14,6 +15,7 @@ type FileInput = {
     text: string;
     textType: TextType[];
     id: string;
+    show?: boolean;
 };
 
 type QuoteInput = {
@@ -21,6 +23,7 @@ type QuoteInput = {
     textType: QuoteType[];
     text: string;
     id: string;
+    show?: boolean;
 };
 
 type LinkInput = {
@@ -29,17 +32,20 @@ type LinkInput = {
     href: string;
     text: string;
     id: string;
+    show?: boolean;
 
 };
 
 type SpaceInput = {
     type: "space";
     id: string;
+    show?: boolean;
 };
 
 type BreakInput = {
     type: "break";
     id: string;
+    show?: boolean;
 };
 
 type OlInput = {
@@ -47,6 +53,7 @@ type OlInput = {
     header: string;
     points: TextInput[];
     id: string;
+    show?: boolean;
 };
 
 type UlInput = {
@@ -54,6 +61,7 @@ type UlInput = {
     header: string;
     points: TextInput[];
     id: string;
+    show?: boolean;
 };
 
 export type Input = TextInput | LinkInput | QuoteInput | FileInput;

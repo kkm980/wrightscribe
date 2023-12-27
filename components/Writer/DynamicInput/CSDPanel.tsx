@@ -9,8 +9,9 @@ interface CSDPanel {
     setMultiLangInputList: any;
     el: any;
     index: any;
+    parentDataObj?:any;
   }
-const CSDPanel: React.FC<CSDPanel> = ({ setMultiLangInputList, multiLangInputList, el, index}) => {
+const CSDPanel: React.FC<CSDPanel> = ({parentDataObj, setMultiLangInputList, multiLangInputList, el, index}) => {
     return(
         <div className='w-[120px] cursor-pointer sticky top-[50%] right-0'>
         <Button variant="ghost"
@@ -18,7 +19,7 @@ const CSDPanel: React.FC<CSDPanel> = ({ setMultiLangInputList, multiLangInputLis
           onClick={() => {
             setMultiLangInputList((prevMultiLangInputList: any) => {
               const updatedInputs = [...prevMultiLangInputList];
-              updatedInputs.push({ ...el, id: `${Math.random()}` });
+              updatedInputs.push({ ...parentDataObj, id: `${Math.random()}` });
               return updatedInputs;
             });
           }}

@@ -25,8 +25,10 @@ interface PageSpecsProps {
   setSupportingLang: any;
   slug: any;
   setSlug: any;
+  addLangInMultiLangArr: any;
+  potentialDeleteLangInMultiLangArr: any;
 }
-const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang, slug, setSlug}) => {
+const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug}) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleOpenDialog = () => {
@@ -36,11 +38,24 @@ const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang,
   const handleCloseDialog = () => {
       setIsDialogOpen(false);
   };
+
+  function getAllLangAddedInMultiLangArr(){
+    for(let i=0;i<languages.length;i++){
+      addLangInMultiLangArr(languages[i].id);
+    }
+  }
+
+  function deleteAllLangInMultiLangArr(){
+    for(let i=0;i<languages.length;i++){
+      languages[i].id != "english" && potentialDeleteLangInMultiLangArr(languages[i].id);
+    }
+  }
+
   return (
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger>
-          <DialogueBox onClick={()=>{handleOpenDialog}} supportingLang={supportingLang} setSupportingLang={setSupportingLang} slug={slug} setSlug={setSlug}/>
+          <DialogueBox onClick={()=>{handleOpenDialog}} setSupportingLang={setSupportingLang} supportingLang={supportingLang} slug={slug} setSlug={setSlug}/>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -88,8 +103,9 @@ const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang,
                     supportingLang.length !== languages.length 
                     ?
                     <Badge className="mr-3 bg-cyan-800 hover:bg-cyan-600 cursor-pointer"
-                    onClick={() => {
-                      setSupportingLang(languages.map((e) => e.id));
+                    onClick={async () => {
+                      await setSupportingLang(languages.map((e) => e.id));
+                      await getAllLangAddedInMultiLangArr();
                     }}
                   >
                     Select All
@@ -103,8 +119,9 @@ const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang,
                     <></>
                     :
                     <Badge variant="destructive" className="cursor-pointer"
-                    onClick={() => {
-                      setSupportingLang(["english"]);
+                    onClick={async() => {
+                      await setSupportingLang(["english"]);
+                      await deleteAllLangInMultiLangArr();
                     }}
                   >
                     Remove All
@@ -114,7 +131,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang,
 
                 </div>
               </div>
-              <CheckboxWrapper {...{supportingLang, setSupportingLang}}/>
+              <CheckboxWrapper {...{supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr}}/>
             </div>
           </div>
           <DialogFooter>

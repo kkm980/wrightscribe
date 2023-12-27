@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DragDropContext, Draggable, DropResult } from 'react-beautiful-dnd';
 import Droppable from "./Dropper";
 import { Button } from '@/components/ui/button';
@@ -64,7 +64,6 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
     });
   };
   const { theme, setTheme } = useTheme();
-
   return (
     <div className="w-[100%]">
       {
@@ -73,14 +72,14 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
             <Droppable droppableId="characters">
               {(provided) => (
                 <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                  {multiLangInputList?.map((e: any, ind: number) => (
-                    <Draggable key={e.id} draggableId={e.id} index={ind}>
+                  {multiLangInputList?.map((elem: any, ind: number) => (
+                    <Draggable key={elem.id} draggableId={elem.id} index={ind}>
                       {(provided) => (
                         <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
                           className='group w-[95%] relative flex justify-between items-start'>
                           <div className='w-[100%]'>
-                            {e.multiLangText
-                              .filter((el: any) => el.language === 'english')
+                            {elem?.multiLangText
+                              ?.filter((el: any) => el.language === 'english')
                               .map((el: any, index: number) => {
                                 let renderedElement = null;
 
@@ -94,7 +93,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                         className='border-1 m-2 w-[65%] mt-3'
                                         onChange={(e) => { handleMultiLangInputChange(ind, index, e.target) }}
                                       />
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
                                     </div>
                                   );
                                 } else if (el.type === "image") {
@@ -114,7 +113,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                           onChange={(e) => { handleMultiLangInputChange(ind, index, e.target) }}
                                         />
                                       </div>
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
                                     </div>
                                   );
                                 } else if (el.type === "link") {
@@ -135,7 +134,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                           onChange={(e) => { handleMultiLangInputChange(ind, index, e.target) }}
                                         />
                                       </div>
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
                                     </div>
                                   );
                                 } else if (el.type === "quote") {
@@ -148,7 +147,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                         name='text'
                                         onChange={(e) => { handleMultiLangInputChange(ind, index, e.target) }}
                                       />
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
                                     </div>
                                   );
                                 }
@@ -159,7 +158,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                       <div
                                         className='border-1 m-2 w-[65%]'
                                       />
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
                                     </div>
                                   );
                                 }
@@ -194,8 +193,8 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                             {<div className='absolute -top-4 left-4'>{ind + 1}{" "}{e.type}</div>}
                             {e.multiLangText.map((el: any, index: number) => {
                               let renderedElement = null;
-
-                              if (el.type === "text") {
+                              if(el.show===false){renderedElement=(<></>)}
+                              else if (el.type === "text") {
                                 renderedElement = (
                                   <div className={`group flex justify-between items-start w-[85%] m-2 mb-4 rounded-lg border-2 relative`}>
                                     <div className='absolute text-sm -top-3 left-2 hidden group-hover:block'>{el.language}</div>

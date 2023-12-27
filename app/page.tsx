@@ -7,6 +7,7 @@ import MultiLangSelector from '@/components/Writer/MultiLangSelector.tsx';
 import PageSpecs from '@/components/Writer/pageSpecs';
 import NavBar from '@/components/navBar';
 import { Button } from '@/components/ui/button';
+import languages from '@/constants/languageConstants';
 import { Input } from '@/types/inputListTypes';
 import multiLangListCreator from '@/utils/multiLangListCreator';
 import { useTheme } from 'next-themes';
@@ -49,21 +50,119 @@ const Home: React.FC<HomeProps> = () => {
   };
 
   // useEffect(()=>{
-  //   multiLang===true &&  setMultiLangInputList(multiLangListCreator(inputList, supportingLang));
-  //   // multiLang===false && setMultiLangInputList([]);
-  // },[inputList, supportingLang, multiLang]);
-  useEffect(()=>{
-    console.log(multiLangInputList, "multiLang");
-  },[multiLangInputList]);
+    // const updatedArr = arr.map((element) => {
+    //   // Remove objects in multiLangText array with language not in supportingLang array
+    //   element.multiLangText = element.multiLangText.filter((langObj) =>
+    //     supportingLang.includes(langObj.language)
+    //   );
+  
+    //   // Add objects for languages in supportingLang array and not in multiLangText array
+    //   supportingLang.forEach((lang) => {
+    //     if (!element.multiLangText.some((langObj) => langObj.language === lang)) {
+    //       element.multiLangText.push({
+    //         id: `${Math.random()}`,
+    //         language: lang,
+    //         textType: ['', ''], // replace with actual values
+    //         type: '', // replace with actual value
+    //         text: '', // replace with actual value
+    //       });
+    //     }
+    //   });
+  
+    //   return element;
+    // });
+  
+    // return updatedArr;
+  // };
+  // },[supportingLang]);
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
+  const deleteLangInMultiLangArr = (lang: string) => {
+    // const updatedArr = multiLangInputList.map((element: any) => {
+    //   // Remove objects in multiLangText array with language not in supportingLang array
+    //   element.multiLangText = element.multiLangText.filter((langObj: any) =>
+    //     langObj.language != lang
+    //   );
+    //   return element;
+    // });
+    // const updatedMultiLangTextArr = [...]
+
+    // setMultiLangInputList(updatedArr);
+  }
+
+  const addLangInMultiLangArr = (lang: string) => {
+    const updatedArr = multiLangInputList.map((element: any) => {
+      const langExists = element.multiLangText.some(
+        (obj: any) => obj.language === lang
+      );
+      if (langExists) {
+        element.multiLangText.forEach((obj: any) => {
+          if (obj.language === lang) {
+            delete obj.show;
+          }
+        });
+      } else{
+        element.multiLangText.push({
+        ...Object.entries(element.multiLangText[0] || {}).reduce(
+          (acc: any, [key, value]) => {
+            if (!["text", "href", "link", "show", "language"].includes(key)) {
+              acc[key] = value;
+            }
+            return acc;
+          },
+          { id: `${Math.random()}`, language: lang }
+        ),
+      });
+      }
+      
+    
+      return element;
+    });
+
+    setMultiLangInputList(updatedArr);
+  }
+
+  const potentialDeleteLangInMultiLangArr = (lang: string) => {
+    const updatedArr = multiLangInputList.map((element: any) => {
+      const langExists = element.multiLangText.some(
+        (obj: any) => obj.language === lang
+      );
+  
+      if (langExists) {
+        element.multiLangText.forEach((obj: any) => {
+          if (obj.language === lang) {
+            obj.show = false;
+          }
+        });
+      }
+  
+      return element;
+    });
+  
+    
+    // console.log(updatedArr);
+
+    setMultiLangInputList(updatedArr);
+  }
+
+  // useEffect(()=>{
+  //   // const updatedArr = multiLangInputList.map((element: any) => {
+  //   //   // Remove objects in multiLangText array with language not in supportingLang array
+  //   //   element.multiLangText = element.multiLangText.filter((langObj: any) =>
+  //   //     langObj.language != lang
+  //   //   );
+  //   //   return element;
+  //   // });
+  //   console.log(multiLangInputList);
+  // },[supportingLang])
+
   return (
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
       <div className="mt-[70px] px-[10px]">
-        <PageSpecs {...{ supportingLang, setSupportingLang, slug, setSlug }} />
+        <PageSpecs {...{setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
         <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${inputList.length>0?"border shadow-2xl":"shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
             <DynamicInputForm {...{multiLangInputList, setMultiLangInputList, multiLang, inputList, setInputList, inputType, setInputType }} />

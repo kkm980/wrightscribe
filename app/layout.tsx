@@ -7,8 +7,8 @@ import NavBar from '@/components/navBar';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'WriteScribe',
-  description: 'Scribe while you write. Anything, Anywhere',
+  title: 'WrightScribe',
+  description: 'A Wright software that makes you to write',
 }
 
 export default function RootLayout({

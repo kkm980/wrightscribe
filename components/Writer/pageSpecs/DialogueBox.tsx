@@ -10,7 +10,7 @@ interface DialogueBoxProps {
   setSlug: any;
 }
 
-const DialogueBox: React.FC<DialogueBoxProps> = ({onClick, supportingLang, setSupportingLang, slug, setSlug}) => {
+const DialogueBox: React.FC<DialogueBoxProps> = ({onClick, supportingLang, slug, setSlug}) => {
 
   return (
     <div className="w-[200px] min-h-[100px]" onClick={()=>{onClick()}}>
