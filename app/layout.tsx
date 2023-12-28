@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Inter } from 'next/font/google'
 import './globals.css';
 import NavBar from '@/components/navBar';
+import { Providers } from "@/redux/provider";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,8 +26,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-        <NavBar />
+          <Providers>
+             <NavBar />
           {children}
+          </Providers>
+       
         </ThemeProvider>
       </body>
     </html>

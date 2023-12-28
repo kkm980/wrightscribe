@@ -8,7 +8,11 @@ import PageSpecs from '@/components/Writer/pageSpecs';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import Image from 'next/image'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { decrement, increment, reset } from "@/redux/features/counterSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+
+
 
 interface HomeProps {
   // Add any additional props if needed
@@ -142,17 +146,8 @@ const Home: React.FC<HomeProps> = () => {
 
     setMultiLangInputList(updatedArr);
   }
-
-  // useEffect(()=>{
-  //   // const updatedArr = multiLangInputList.map((element: any) => {
-  //   //   // Remove objects in multiLangText array with language not in supportingLang array
-  //   //   element.multiLangText = element.multiLangText.filter((langObj: any) =>
-  //   //     langObj.language != lang
-  //   //   );
-  //   //   return element;
-  //   // });
-  //   console.log(multiLangInputList);
-  // },[supportingLang])
+  const count = useAppSelector((state) => state.counterReducer.value);
+  const dispatch = useAppDispatch();
 
   return (
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
@@ -173,7 +168,17 @@ const Home: React.FC<HomeProps> = () => {
             </div>
               : <></>
           }
-
+          <div style={{ marginBottom: "4rem", textAlign: "center" }}>
+        <h4 style={{ marginBottom: 16 }}>{count}</h4>
+        <button onClick={() => dispatch(increment())}>increment</button>
+        <button
+          onClick={() => dispatch(decrement())}
+          style={{ marginInline: 16 }}
+        >
+          decrement
+        </button>
+        <button onClick={() => dispatch(reset())}>reset</button>
+      </div>
         </div>
       </div>
     </main>
