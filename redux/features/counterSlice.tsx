@@ -1,11 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type CounterState = {
-  value: number;
+  supportingLangs: string[];
+  name: string;
+  count: number;
 };
 
 const initialState = {
-  value: 0,
+    supportingLangs: ["m"],
+    name: "ram",
+    count: 0
 } as CounterState;
 
 export const counter = createSlice({
@@ -15,17 +19,24 @@ export const counter = createSlice({
     reset: () => initialState,
     increment: (state) => {
         console.log("hi");
-      state.value += 1;
+      state.count += 1;
     },
     decrement: (state) => {
-      state.value -= 1;
+      state.count -= 1;
     },
     incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
+      state.count += action.payload;
     },
     decrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value -= action.payload;
+      state.count -= action.payload;
     },
+    addName: (state, action: PayloadAction<string>) => {
+        state.name+= action.payload;
+    },
+    setSupportingLangs: (state, action: PayloadAction<string>) => {
+        state.supportingLangs.push(action.payload);
+        console.log("supporting", state.supportingLangs, action.payload)
+    }
   },
 });
 
@@ -33,6 +44,8 @@ export const {
   increment,
   incrementByAmount,
   decrement,
+  addName,
+  setSupportingLangs,
   decrementByAmount,
   reset,
 } = counter.actions;

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
-import { decrement, increment, reset } from "@/redux/features/counterSlice";
+import { decrement, increment, reset, addName, setSupportingLangs } from "@/redux/features/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 
@@ -146,7 +146,9 @@ const Home: React.FC<HomeProps> = () => {
 
     setMultiLangInputList(updatedArr);
   }
-  const count = useAppSelector((state) => state.counterReducer.value);
+  const count = useAppSelector((state) => state.counterReducer.count);
+  const name = useAppSelector((state) => state.counterReducer.name);
+  const supportingLangs = useAppSelector((state) => state.counterReducer.supportingLangs);
   const dispatch = useAppDispatch();
 
   return (
@@ -170,9 +172,14 @@ const Home: React.FC<HomeProps> = () => {
           }
           <div style={{ marginBottom: "4rem", textAlign: "center" }}>
         <h4 style={{ marginBottom: 16 }}>{count}</h4>
+        <h4 style={{ marginBottom: 16 }}>{name}</h4>
+        <h4 style={{ marginBottom: 16 }}>{supportingLangs.length}..</h4>
         <button onClick={() => dispatch(increment())}>increment</button>
         <button
-          onClick={() => dispatch(decrement())}
+          onClick={() => {dispatch(decrement());
+                            dispatch(addName("shyam"));
+                            dispatch(setSupportingLangs("alpha"));
+          }}
           style={{ marginInline: 16 }}
         >
           decrement
