@@ -13,16 +13,12 @@ import { useTheme } from 'next-themes';
 import CSDPanel from './CSDPanel';
 
 interface DynamicInputFormProps {
-  inputList: any;
   multiLangInputList: any;
   setMultiLangInputList: any;
   multiLang: any;
-  setInputList: React.Dispatch<React.SetStateAction<any>>;
-  inputType: string;
-  setInputType: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList, setMultiLangInputList, multiLang, inputList, setInputList, inputType, setInputType }) => {
+const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList, setMultiLangInputList, multiLang }) => {
 
   function handleOnDragEnd(result: DropResult) {
     if (!result.destination) return;

@@ -64,13 +64,16 @@ const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang,
           <div className="flex flex-col gap-4 py-4 justify-start items-start">
             <div className="flex flex-col justify-start items-start">
               <Label htmlFor="name" className="text-left mb-2 flex justify-start items-center">
-                Slug :- {" "} <TooltipBox icon={<BadgeInfo size="16px" className="cursor-pointer ml-2" />} tooltipContent={
-                  <div>
-                    <p>A slug is the name of a page on the website.</p>
-                    <p>If you don't name this page, we'll do it for you.</p>
-                    <p>You can always change it later.</p>
-                  </div>
-                } />
+                Slug :- {" "}
+                <TooltipBox icon={<BadgeInfo size="16px" className="cursor-pointer ml-2" />}
+                  tooltipContent={
+                    <div>
+                      <p>A slug is the name of a page on the website.</p>
+                      <p>If you don't name this page, we'll do it for you.</p>
+                      <p>You can always change it later.</p>
+                    </div>
+                  }
+                />
 
               </Label>
               <Input

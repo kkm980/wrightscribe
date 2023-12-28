@@ -1,4 +1,5 @@
 import Ping from "@/components/Common/Ping";
+import { Check } from 'lucide-react';
 import React, { useEffect } from "react";
 
 interface DialogueBoxProps {
@@ -21,12 +22,14 @@ const DialogueBox: React.FC<DialogueBoxProps> = ({onClick, supportingLang, slug,
             -&gt;
           </span>
         </div>
-        <div className="justify-start items-center flex">
-          <div className={`m-0 max-w-[30ch] text-sm opacity-50 p-1 rounded-sm flex`}>
+        <div className="justify-between items-center flex">
+          <div className={`m-0 max-w-[30ch] text-sm opacity-50 p-1 rounded-sm flex relative`}>
             Languages {supportingLang.length===1?<Ping/>:<></>}
+            {supportingLang.length>1 && <div className="border-2 border-[grey] rounded-full p-[1px] text-[10px] text-black dark:text-teal-500 text-semibold w-[20px] h-[20px] justify-center items-center absolute -top-1 -right-2 hidden group-hover:flex">{supportingLang.length}</div>}
           </div>
-          <div className={`m-0 max-w-[30ch] text-sm opacity-50 p-1 rounded-sm flex`}>
+          <div className={`m-0 mr-4 max-w-[30ch] text-sm opacity-50 p-1 rounded-sm flex relative`}>
             Slug {slug.length===0?<Ping/>:<></>}
+            {slug.length>0 && <div className="border-1 border-[grey] rounded-full p-[0px] text-[5px] text-black dark:text-teal-500 text-semibold w-[20px] h-[20px] justify-center items-center absolute top-1 -right-4 hidden group-hover:flex"><Check/></div>}
           </div>
         </div>
       </div>

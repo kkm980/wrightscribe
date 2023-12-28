@@ -5,14 +5,10 @@ import DynamicInputForm from '@/components/Writer/DynamicInput/DynamicInput';
 import InputSelector from '@/components/Writer/InputSelector/InputSelector';
 import MultiLangSelector from '@/components/Writer/MultiLangSelector.tsx';
 import PageSpecs from '@/components/Writer/pageSpecs';
-import NavBar from '@/components/navBar';
 import { Button } from '@/components/ui/button';
-import languages from '@/constants/languageConstants';
-import { Input } from '@/types/inputListTypes';
-import multiLangListCreator from '@/utils/multiLangListCreator';
 import { useTheme } from 'next-themes';
 import Image from 'next/image'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface HomeProps {
   // Add any additional props if needed
@@ -21,8 +17,6 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = () => {
 
   const { theme, setTheme } = useTheme();
-  const [inputList, setInputList] = useState<any>([]);
-  const [inputType, setInputType] = useState<string>('text');
   const [supportingLang, setSupportingLang] = useState<string[]>(["english"]);
   const [multiLang, setMultiLang] = useState<boolean>(false);
   const [multiLangInputList, setMultiLangInputList] = useState<any>([]);
@@ -163,9 +157,9 @@ const Home: React.FC<HomeProps> = () => {
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
       <div className="mt-[70px] px-[10px]">
         <PageSpecs {...{setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
-        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${inputList.length>0?"border shadow-2xl":"shadow-0"}`}>
+        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList.length>0?"border shadow-2xl":"shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
-            <DynamicInputForm {...{multiLangInputList, setMultiLangInputList, multiLang, inputList, setInputList, inputType, setInputType }} />
+            <DynamicInputForm {...{multiLangInputList, setMultiLangInputList, multiLang }} />
             <InputSelector {...{ handleAddInput, multiLangInputList }} />
           </div>
           {
