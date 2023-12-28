@@ -17,6 +17,7 @@ import CheckboxWrapper from "./Checkbox";
 import TooltipBox from "@/components/Common/Tooltip";
 import { Badge } from "@/components/ui/badge";
 import languages from "@/constants/languageConstants";
+import FallBackSelector from "./FallBackSelector";
 
 
 interface PageSpecsProps {
@@ -27,8 +28,10 @@ interface PageSpecsProps {
   setSlug: any;
   addLangInMultiLangArr: any;
   potentialDeleteLangInMultiLangArr: any;
+  defaultLangChoice:any;
+  setDefaultLangChoice: any;
 }
-const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug}) => {
+const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangChoice, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug}) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleOpenDialog = () => {
@@ -62,28 +65,49 @@ const PageSpecs: React.FC<PageSpecsProps> = ({supportingLang, setSupportingLang,
             <DialogTitle>Edit page credentials</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col gap-4 py-4 justify-start items-start">
-            <div className="flex flex-col justify-start items-start">
-              <Label htmlFor="name" className="text-left mb-2 flex justify-start items-center">
-                Slug :- {" "}
-                <TooltipBox icon={<BadgeInfo size="16px" className="cursor-pointer ml-2" />}
-                  tooltipContent={
-                    <div>
-                      <p>A slug is the name of a page on the website.</p>
-                      <p>If you don't name this page, we'll do it for you.</p>
-                      <p>You can always change it later.</p>
-                    </div>
-                  }
-                />
+            <div className="w-[100%] flex justify-between items-start p-0">
+              <div className="flex flex-col justify-start items-start">
+                <Label htmlFor="name" className="text-left mb-2 flex justify-start items-center">
+                  Slug :- {" "}
+                  <TooltipBox icon={<BadgeInfo size="16px" className="cursor-pointer ml-2" />}
+                    tooltipContent={
+                      <div>
+                        <p>A slug is the name of a page on the website.</p>
+                        <p>If you don't name this page, we'll do it for you.</p>
+                        <p>You can always change it later.</p>
+                      </div>
+                    }
+                  />
 
-              </Label>
-              <Input
-                id="slug"
-                placeholder="Write Slug name"
-                className="col-span-3"
-                value={slug}
-                onChange={(e)=>{setSlug(e.target.value)}}
-              />
+                </Label>
+                <Input
+                  id="slug"
+                  placeholder="Write Slug name"
+                  className="w-[150px]"
+                  value={slug}
+                  onChange={(e) => { setSlug(e.target.value) }}
+                />
+              </div>
+              <div className="flex flex-col justify-start items-start">
+                <Label htmlFor="fallback" className="text-left mb-2 flex justify-start items-center">
+                  Language Fallback :- {" "}
+                  <TooltipBox icon={<BadgeInfo size="16px" className="cursor-pointer ml-2" />}
+                    tooltipContent={
+                      <div>
+                        <p>Unspecified texts for selected languages defaults to fallback values.</p>
+                        <p>By default it is english, you can change it anytime.</p>
+                      </div>
+                    }
+                  />
+
+                </Label>
+                <FallBackSelector
+                  {...{ defaultLangChoice, setDefaultLangChoice }} />
+              </div>
+              
             </div>
+            
+            
             <div className="flex flex-col justify-start items-start">
               <div className="flex justify-between items-start w-[100%]">
                 <Label htmlFor="name" className="text-left mb-2 flex justify-between items-start">

@@ -21,6 +21,7 @@ const Home: React.FC<HomeProps> = () => {
   const [multiLang, setMultiLang] = useState<boolean>(false);
   const [multiLangInputList, setMultiLangInputList] = useState<any>([]);
   const [slug, setSlug] = useState<any>("");
+  const [defaultLangChoice, setDefaultLangChoice] = useState<string>("english");
 
   // function is called whenever user creates a new field
   const handleAddInput = (obj: any): void => {
@@ -156,7 +157,7 @@ const Home: React.FC<HomeProps> = () => {
   return (
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
       <div className="mt-[70px] px-[10px]">
-        <PageSpecs {...{setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
+        <PageSpecs {...{defaultLangChoice, setDefaultLangChoice,setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
         <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList.length>0?"border shadow-2xl":"shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
             <DynamicInputForm {...{multiLangInputList, setMultiLangInputList, multiLang }} />
