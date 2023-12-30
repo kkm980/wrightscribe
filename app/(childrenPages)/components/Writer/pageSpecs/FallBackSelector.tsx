@@ -30,7 +30,7 @@ const FallBackSelector: React.FC<FallBackSelectorProps> = ({defaultLangChoice, s
         <SelectGroup>
             <SelectLabel>Fallback</SelectLabel>
             {langChoiceTypes.map((e:any)=>(
-              <SelectItem value={e.value}>{e.id}</SelectItem>
+              <SelectItem value={e.value} key={e.id}>{e.id}</SelectItem>
             ))}
         </SelectGroup>
       </SelectContent>

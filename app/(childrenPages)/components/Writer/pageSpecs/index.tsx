@@ -73,7 +73,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangC
                     tooltipContent={
                       <div>
                         <p>A slug is the name of a page on the website.</p>
-                        <p>If you don't name this page, we'll do it for you.</p>
+                        <p>If you do not name this page, we will do it for you.</p>
                         <p>You can always change it later.</p>
                       </div>
                     }
