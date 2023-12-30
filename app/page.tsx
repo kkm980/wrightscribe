@@ -27,6 +27,68 @@ const Home: React.FC<HomeProps> = () => {
   const [slug, setSlug] = useState<any>("");
   const [defaultLangChoice, setDefaultLangChoice] = useState<string>("english");
 
+  useEffect(() => {
+    const x = localStorage.getItem("wright_scribe_persistent_data");
+    if (x) {
+      const supportingLang_local = JSON.parse(x)?.current_page_data?.supportingLang;
+      console.log(supportingLang_local, "loccllLang");
+      if (supportingLang_local) {
+        // setSupportingLang(supportingLang_local);
+        supportingLang_local?.includes("english") ? setSupportingLang(supportingLang_local) : setSupportingLang([...supportingLang_local, "english"]);
+      }
+
+
+      const multiLangInputList_local = JSON.parse(x)?.current_page_data?.multiLangInputList;
+      console.log(multiLangInputList_local, "loccll");
+      if (multiLangInputList_local) {
+        setMultiLangInputList(multiLangInputList_local);
+      }
+    }
+  }, []);
+
+  // setting localStorage on any state changes
+  useEffect(() => {
+    console.log(supportingLang, "here it goes langs");
+    const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
+    supportingLang.length > 1 &&
+      localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
+        ...localObj,
+        current_page_data: {
+          ...localObj.current_page_data,
+          supportingLang: [...supportingLang]
+        }
+      }));
+
+    console.log(JSON.stringify({
+      ...localObj,
+      current_page_data: {
+        ...localObj.current_page_data,
+        supportingLang: [...supportingLang]
+      }
+    }), "xyz");
+  }, [supportingLang]);
+
+
+
+  useEffect(() => {
+    console.log(multiLangInputList, "here it goes");
+    const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
+    multiLangInputList.length != 0 &&
+      localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
+        ...localObj,
+        current_page_data: {
+          ...localObj.current_page_data,
+          multiLangInputList: [...multiLangInputList]
+        }
+      }));
+
+  }, [multiLangInputList]);
+
+
+
+
+
+
   // function is called whenever user creates a new field
   const handleAddInput = (obj: any): void => {
     // const newInputArr=[...inputList];
@@ -38,40 +100,40 @@ const Home: React.FC<HomeProps> = () => {
     //   ...prevInputList,
     //   { ...obj, id: `${Math.random()}` } as Input, // Explicitly cast to TextInput
     // ]);
-    const {textType, type} = obj;
-    const id=`${Math.random()}`;
-    const multiLangArr:any=[];
-    supportingLang.forEach((el:any)=>{
-      multiLangArr.push({ textType, type, language:el, id: `${id}${el}` })
+    const { textType, type } = obj;
+    const id = `${Math.random()}`;
+    const multiLangArr: any = [];
+    supportingLang.forEach((el: any) => {
+      multiLangArr.push({ textType, type, language: el, id: `${Math.random()}${el}` })
     })
-    const newobj={textType, type, id:id, multiLangText:multiLangArr }
+    const newobj = { textType, type, id: `${Math.random()}lang`, multiLangText: multiLangArr }
     setMultiLangInputList([...multiLangInputList, newobj]);
   };
 
   // useEffect(()=>{
-    // const updatedArr = arr.map((element) => {
-    //   // Remove objects in multiLangText array with language not in supportingLang array
-    //   element.multiLangText = element.multiLangText.filter((langObj) =>
-    //     supportingLang.includes(langObj.language)
-    //   );
-  
-    //   // Add objects for languages in supportingLang array and not in multiLangText array
-    //   supportingLang.forEach((lang) => {
-    //     if (!element.multiLangText.some((langObj) => langObj.language === lang)) {
-    //       element.multiLangText.push({
-    //         id: `${Math.random()}`,
-    //         language: lang,
-    //         textType: ['', ''], // replace with actual values
-    //         type: '', // replace with actual value
-    //         text: '', // replace with actual value
-    //       });
-    //     }
-    //   });
-  
-    //   return element;
-    // });
-  
-    // return updatedArr;
+  // const updatedArr = arr.map((element) => {
+  //   // Remove objects in multiLangText array with language not in supportingLang array
+  //   element.multiLangText = element.multiLangText.filter((langObj) =>
+  //     supportingLang.includes(langObj.language)
+  //   );
+
+  //   // Add objects for languages in supportingLang array and not in multiLangText array
+  //   supportingLang.forEach((lang) => {
+  //     if (!element.multiLangText.some((langObj) => langObj.language === lang)) {
+  //       element.multiLangText.push({
+  //         id: `${Math.random()}`,
+  //         language: lang,
+  //         textType: ['', ''], // replace with actual values
+  //         type: '', // replace with actual value
+  //         text: '', // replace with actual value
+  //       });
+  //     }
+  //   });
+
+  //   return element;
+  // });
+
+  // return updatedArr;
   // };
   // },[supportingLang]);
 
@@ -98,26 +160,28 @@ const Home: React.FC<HomeProps> = () => {
         (obj: any) => obj.language === lang
       );
       if (langExists) {
+        console.log("hi")
         element.multiLangText.forEach((obj: any) => {
           if (obj.language === lang) {
-            delete obj.show;
+             obj.show=true;
           }
         });
-      } else{
+      } else {
+        console.log("hello")
         element.multiLangText.push({
-        ...Object.entries(element.multiLangText[0] || {}).reduce(
-          (acc: any, [key, value]) => {
-            if (!["text", "href", "link", "show", "language"].includes(key)) {
-              acc[key] = value;
-            }
-            return acc;
-          },
-          { id: `${Math.random()}`, language: lang }
-        ),
-      });
+          ...Object.entries(element.multiLangText[0] || {}).reduce(
+            (acc: any, [key, value]) => {
+              if (!["text", "href", "link", "language", "id"].includes(key)) {
+                acc[key] = value;
+              }
+              return {...acc, show: true};
+            },
+            { id: `${Math.random()}`, language: lang, show: true }
+          ),
+        });
       }
-      
-    
+
+
       return element;
     });
 
@@ -129,7 +193,7 @@ const Home: React.FC<HomeProps> = () => {
       const langExists = element.multiLangText.some(
         (obj: any) => obj.language === lang
       );
-  
+
       if (langExists) {
         element.multiLangText.forEach((obj: any) => {
           if (obj.language === lang) {
@@ -137,12 +201,9 @@ const Home: React.FC<HomeProps> = () => {
           }
         });
       }
-  
+
       return element;
     });
-  
-    
-    // console.log(updatedArr);
 
     setMultiLangInputList(updatedArr);
   }
@@ -154,38 +215,39 @@ const Home: React.FC<HomeProps> = () => {
   return (
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
       <div className="mt-[70px] px-[10px]">
-        <PageSpecs {...{defaultLangChoice, setDefaultLangChoice,setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
-        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList.length>0?"border shadow-2xl":"shadow-0"}`}>
+        <PageSpecs {...{ defaultLangChoice, setDefaultLangChoice, setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
+        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
-            <DynamicInputForm {...{multiLangInputList, setMultiLangInputList, multiLang }} />
+            <DynamicInputForm {...{ multiLangInputList, setMultiLangInputList, multiLang }} />
             <InputSelector {...{ handleAddInput, multiLangInputList }} />
           </div>
           {
             multiLangInputList.length > 0 ? <div className='sticky top-[80px] right-[0px] flex flex-col'>
-              <MultiLangSelector {...{multiLang, setMultiLang}}/>
+              <MultiLangSelector {...{ multiLang, setMultiLang }} />
               <Button variant="save" className='mb-2'>Save</Button>
               <Button variant="copy" className='mb-2'>Clone</Button>
               <Button variant="delete" className='mb-2'>Delete</Button>
-              
+
             </div>
               : <></>
           }
           <div style={{ marginBottom: "4rem", textAlign: "center" }}>
-        <h4 style={{ marginBottom: 16 }}>{count}</h4>
-        <h4 style={{ marginBottom: 16 }}>{name}</h4>
-        <h4 style={{ marginBottom: 16 }}>{supportingLangs.length}..</h4>
-        <button onClick={() => dispatch(increment())}>increment</button>
-        <button
-          onClick={() => {dispatch(decrement());
-                            dispatch(addName("shyam"));
-                            dispatch(setSupportingLangs("alpha"));
-          }}
-          style={{ marginInline: 16 }}
-        >
-          decrement
-        </button>
-        <button onClick={() => dispatch(reset())}>reset</button>
-      </div>
+            <h4 style={{ marginBottom: 16 }}>{count}</h4>
+            <h4 style={{ marginBottom: 16 }}>{name}</h4>
+            <h4 style={{ marginBottom: 16 }}>{supportingLangs.length}..</h4>
+            <button onClick={() => dispatch(increment())}>increment</button>
+            <button
+              onClick={() => {
+                dispatch(decrement());
+                dispatch(addName("shyam"));
+                dispatch(setSupportingLangs("alpha"));
+              }}
+              style={{ marginInline: 16 }}
+            >
+              decrement
+            </button>
+            <button onClick={() => dispatch(reset())}>reset</button>
+          </div>
         </div>
       </div>
     </main>
