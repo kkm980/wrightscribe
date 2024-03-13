@@ -31,7 +31,6 @@ const Home: React.FC<HomeProps> = () => {
     const x = localStorage.getItem("wright_scribe_persistent_data");
     if (x) {
       const supportingLang_local = JSON.parse(x)?.current_page_data?.supportingLang;
-      console.log(supportingLang_local, "loccllLang");
       if (supportingLang_local) {
         // setSupportingLang(supportingLang_local);
         supportingLang_local?.includes("english") ? setSupportingLang(supportingLang_local) : setSupportingLang([...supportingLang_local, "english"]);
@@ -39,7 +38,6 @@ const Home: React.FC<HomeProps> = () => {
 
 
       const multiLangInputList_local = JSON.parse(x)?.current_page_data?.multiLangInputList;
-      console.log(multiLangInputList_local, "loccll");
       if (multiLangInputList_local) {
         setMultiLangInputList(multiLangInputList_local);
       }
@@ -48,7 +46,6 @@ const Home: React.FC<HomeProps> = () => {
 
   // setting localStorage on any state changes
   useEffect(() => {
-    console.log(supportingLang, "here it goes langs");
     const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
     supportingLang.length > 1 &&
       localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
@@ -58,20 +55,11 @@ const Home: React.FC<HomeProps> = () => {
           supportingLang: [...supportingLang]
         }
       }));
-
-    console.log(JSON.stringify({
-      ...localObj,
-      current_page_data: {
-        ...localObj.current_page_data,
-        supportingLang: [...supportingLang]
-      }
-    }), "xyz");
   }, [supportingLang]);
 
 
 
   useEffect(() => {
-    console.log(multiLangInputList, "here it goes");
     const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
     multiLangInputList.length != 0 &&
       localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
@@ -155,19 +143,20 @@ const Home: React.FC<HomeProps> = () => {
   }
 
   const addLangInMultiLangArr = (lang: string) => {
-    const updatedArr = multiLangInputList.map((element: any) => {
+    let updatedArr = [...multiLangInputList];
+    updatedArr = multiLangInputList.map((element: any) => {
       const langExists = element.multiLangText.some(
         (obj: any) => obj.language === lang
       );
       if (langExists) {
-        console.log("hi")
         element.multiLangText.forEach((obj: any) => {
           if (obj.language === lang) {
              obj.show=true;
+             console.log(obj.show, "elee1");
           }
         });
+        console.log("elee2",element.multiLangText[1].show);
       } else {
-        console.log("hello")
         element.multiLangText.push({
           ...Object.entries(element.multiLangText[0] || {}).reduce(
             (acc: any, [key, value]) => {
@@ -181,7 +170,7 @@ const Home: React.FC<HomeProps> = () => {
         });
       }
 
-
+      console.log(element, "fin");
       return element;
     });
 
@@ -231,7 +220,7 @@ const Home: React.FC<HomeProps> = () => {
             </div>
               : <></>
           }
-          <div style={{ marginBottom: "4rem", textAlign: "center" }}>
+          {/* <div style={{ marginBottom: "4rem", textAlign: "center" }}>
             <h4 style={{ marginBottom: 16 }}>{count}</h4>
             <h4 style={{ marginBottom: 16 }}>{name}</h4>
             <h4 style={{ marginBottom: 16 }}>{supportingLangs.length}..</h4>
@@ -247,7 +236,7 @@ const Home: React.FC<HomeProps> = () => {
               decrement
             </button>
             <button onClick={() => dispatch(reset())}>reset</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>
