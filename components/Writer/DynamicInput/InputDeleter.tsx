@@ -45,7 +45,7 @@ interface InputSelectorProps {
                     return updatedInputs;
                   });
 
-                  multiLangInputList.length === 1 && localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
+                  multiLangInputList?.length === 1 && localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
                     ...localObj,
                     current_page_data: {
                       ...localObj.current_page_data,

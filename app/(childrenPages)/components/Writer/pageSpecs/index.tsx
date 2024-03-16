@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import {
   Dialog,
   DialogContent,
@@ -32,6 +33,7 @@ interface PageSpecsProps {
   setDefaultLangChoice: any;
 }
 const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangChoice, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug}) => {
+  const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleOpenDialog = () => {
@@ -85,7 +87,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangC
                   placeholder="Write Slug name"
                   className="w-[150px]"
                   value={slug}
-                  onChange={(e) => { setSlug(e.target.value) }}
+                  onChange={(e) => { setSlug(e.target.value)}}
                 />
               </div>
               <div className="flex flex-col justify-start items-start">
@@ -162,7 +164,15 @@ const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangC
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={()=>{handleCloseDialog()}}>Save changes</Button>
+            <Button
+              type="submit"
+              onClick={()=>{
+                handleCloseDialog();
+                router.push(`/${slug}`)
+              }}
+            >
+              Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

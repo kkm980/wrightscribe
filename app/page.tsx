@@ -9,10 +9,11 @@ import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
-import { decrement, increment, reset, addName, setSupportingLangs } from "@/redux/features/counterSlice";
+import { decrement, increment, reset, addName, setSupportingLangs, setLoading, setMultiLangInputListStore } from "@/redux/features/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-
-
+import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
+import { IconSquareRoundedX } from "@tabler/icons-react";
+import { useRouter } from 'next/navigation';
 
 interface HomeProps {
   // Add any additional props if needed
@@ -21,11 +22,21 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = () => {
 
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
   const [supportingLang, setSupportingLang] = useState<string[]>(["english"]);
   const [multiLang, setMultiLang] = useState<boolean>(false);
   const [multiLangInputList, setMultiLangInputList] = useState<any>([]);
   const [slug, setSlug] = useState<any>("");
   const [defaultLangChoice, setDefaultLangChoice] = useState<string>("english");
+  // const [loading, setLoading] = useState(true);
+
+  const count = useAppSelector((state) => state.counterReducer.count);
+  const name = useAppSelector((state) => state.counterReducer.name);
+  const supportingLangs = useAppSelector((state) => state.counterReducer.supportingLangs);
+  const loading = useAppSelector((state) => state.counterReducer.loading);
+  const multiLangInputListStore = useAppSelector((state) => state.counterReducer.multiLangInputListStore);
+  const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     const x = localStorage.getItem("wright_scribe_persistent_data");
@@ -123,7 +134,7 @@ const Home: React.FC<HomeProps> = () => {
   }
 
   const addLangInMultiLangArr = (lang: string) => {
-    let updatedArr = multiLangInputList.map((element: any) => {
+    let updatedArr = multiLangInputList?.map((element: any) => {
       const langExists = element.multiLangText.some(
         (obj: any) => obj.language === lang
       );
@@ -158,7 +169,7 @@ const Home: React.FC<HomeProps> = () => {
   }
 
   const potentialDeleteLangInMultiLangArr = (lang: string) => {
-    const updatedArr = multiLangInputList.map((element: any) => {
+    const updatedArr = multiLangInputList?.map((element: any) => {
       const langExists = element.multiLangText.some(
         (obj: any) => obj.language === lang
       );
@@ -178,7 +189,7 @@ const Home: React.FC<HomeProps> = () => {
   }
   useEffect(() => {
     const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
-    multiLangInputList.length != 0 &&
+    multiLangInputList?.length != 0 &&
       localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
         ...localObj,
         current_page_data: {
@@ -186,23 +197,48 @@ const Home: React.FC<HomeProps> = () => {
           multiLangInputList: [...multiLangInputList]
         }
       }));
+      console.log(multiLangInputList);
   }, [multiLangInputList]);
-  const count = useAppSelector((state) => state.counterReducer.count);
-  const name = useAppSelector((state) => state.counterReducer.name);
-  const supportingLangs = useAppSelector((state) => state.counterReducer.supportingLangs);
-  const dispatch = useAppDispatch();
 
+  const loadingStates = [
+    {
+      text: "Writing",
+    },
+    {
+      text: "Scribing",
+    },
+    {
+      text: "Writing your right scribes as WrightScribe",
+    },
+    {
+      text: "Alright ?",
+    }
+  ];
+  useEffect(()=>{
+    // dispatch(setLoading(true));
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+    },3000)
+  },[]) 
+  
+  function migrate(){
+    if(slug.length>=4){
+      dispatch(setMultiLangInputListStore({...multiLangInputListStore, [slug]:[...multiLangInputList]}));
+      router.push(`/${slug}`);
+    }
+  }
   return (
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
+      <Loader loadingStates={loadingStates} loading={loading} duration={600} />
       <div className="mt-[70px] px-[10px]">
-        <PageSpecs {...{ defaultLangChoice, setDefaultLangChoice, setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
-        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
+        <PageSpecs {...{ defaultLangChoice, setDefaultLangChoice, setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug, migrate }} />
+        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList?.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
             <DynamicInputForm {...{ multiLangInputList, setMultiLangInputList, multiLang }} />
             <InputSelector {...{ handleAddInput, multiLangInputList }} />
           </div>
           {
-            multiLangInputList.length > 0 ? <div className='sticky top-[80px] right-[0px] flex flex-col'>
+            multiLangInputList?.length > 0 ? <div className='sticky top-[80px] right-[0px] flex flex-col'>
               <MultiLangSelector {...{ multiLang, setMultiLang }} />
               <Button variant="save" className='mb-2'>Save</Button>
               <Button variant="copy" className='mb-2'>Clone</Button>
@@ -211,7 +247,7 @@ const Home: React.FC<HomeProps> = () => {
             </div>
               : <></>
           }
-          {/* <div style={{ marginBottom: "4rem", textAlign: "center" }}>
+          <div style={{ marginBottom: "4rem", textAlign: "center" }}>
             <h4 style={{ marginBottom: 16 }}>{count}</h4>
             <h4 style={{ marginBottom: 16 }}>{name}</h4>
             <h4 style={{ marginBottom: 16 }}>{supportingLangs.length}..</h4>
@@ -227,7 +263,7 @@ const Home: React.FC<HomeProps> = () => {
               decrement
             </button>
             <button onClick={() => dispatch(reset())}>reset</button>
-          </div> */}
+          </div>
         </div>
       </div>
     </main>
