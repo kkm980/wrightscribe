@@ -4,6 +4,10 @@ const languages = [
       label: "Arabic",
     },
     {
+      id: "bhojpuri",
+      label: "Bhojpuri",
+    },
+    {
       id: "bulgarian",
       label: "Bulgarian",
     },
@@ -25,6 +29,10 @@ const languages = [
       label: "German",
     },
     {
+      id: "hindi",
+      label: "Hindi",
+    },
+    {
       id: "italian",
       label: "Italian",
     },
@@ -33,8 +41,24 @@ const languages = [
       label: "Japanese",
     },
     {
+      id: "kannad",
+      label: "Kannad",
+    },
+    {
       id: "korean",
       label: "Korean",
+    },
+    {
+      id: "maithili",
+      label: "Maithili",
+    },
+    {
+      id: "malayalam",
+      label: "Malayalam",
+    },
+    {
+      id: "marathi",
+      label: "Marathi",
     },
     {
       id: "portuguese",
@@ -55,6 +79,14 @@ const languages = [
     {
       id: "swedish",
       label: "Swedish",
+    },
+    {
+      id: "tamil",
+      label: "Tamil",
+    },
+    {
+      id: "telagu",
+      label: "Telagu",
     },
     {
       id: "thai",
