@@ -60,6 +60,18 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
     });
   };
   const { theme, setTheme } = useTheme();
+  function generateRandomHexColor(): string {
+    // Generate a random 24-bit hexadecimal color
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  
+    // Pad the color code with zeros to ensure it has 6 digits
+    const hexColor = `#${randomColor.padStart(6, '0')}`;
+  
+    return hexColor;
+  }
+  
+  // Example usage
+  const randomBorderColor = generateRandomHexColor();
   return (
     <div className="w-[100%]">
       {
@@ -184,10 +196,12 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                     <Draggable key={e.id} draggableId={e.id} index={ind}>
                       {(provided) => (
                         <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
-                          className='w-[95%] border-2 rounded mb-4 pt-5 relative flex justify-between items-start'>
+                          className='w-[95%] border rounded mb-4 pt-5 relative flex justify-between items-start'
+                          style={{borderColor: `${generateRandomHexColor()}`}}
+                          >
                           <div className='w-[100%]'>
                             {<div className='absolute -top-4 left-4'>{ind + 1}{" "}{e.type}</div>}
-                            {e.multiLangText.map((el: any, index: number) => {
+                            {e?.multiLangText?.map((el: any, index: number) => {
                               let renderedElement = null;
                               if(el.show==false){renderedElement=(<></>)}
                               else if (el.type === "text") {

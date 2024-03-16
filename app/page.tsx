@@ -9,9 +9,10 @@ import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
-import { decrement, increment, reset, addName, setSupportingLangs } from "@/redux/features/counterSlice";
+import { decrement, increment, reset, addName, setSupportingLangs, setLoading, setMultiLangInputListStore } from "@/redux/features/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-
+import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
+import { IconSquareRoundedX } from "@tabler/icons-react";
 
 
 interface HomeProps {
@@ -26,6 +27,15 @@ const Home: React.FC<HomeProps> = () => {
   const [multiLangInputList, setMultiLangInputList] = useState<any>([]);
   const [slug, setSlug] = useState<any>("");
   const [defaultLangChoice, setDefaultLangChoice] = useState<string>("english");
+  // const [loading, setLoading] = useState(true);
+
+  const count = useAppSelector((state) => state.counterReducer.count);
+  const name = useAppSelector((state) => state.counterReducer.name);
+  const supportingLangs = useAppSelector((state) => state.counterReducer.supportingLangs);
+  const loading = useAppSelector((state) => state.counterReducer.loading);
+  const multiLangInputListStore = useAppSelector((state) => state.counterReducer.multiLangInputListStore);
+  const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     const x = localStorage.getItem("wright_scribe_persistent_data");
@@ -186,14 +196,44 @@ const Home: React.FC<HomeProps> = () => {
           multiLangInputList: [...multiLangInputList]
         }
       }));
+      dispatch(setMultiLangInputListStore({main:[...multiLangInputList]}));
   }, [multiLangInputList]);
-  const count = useAppSelector((state) => state.counterReducer.count);
-  const name = useAppSelector((state) => state.counterReducer.name);
-  const supportingLangs = useAppSelector((state) => state.counterReducer.supportingLangs);
-  const dispatch = useAppDispatch();
 
+  const loadingStates = [
+    {
+      text: "Buying a condo",
+    },
+    {
+      text: "Travelling in a flight",
+    },
+    {
+      text: "Meeting Tyler Durden",
+    },
+    {
+      text: "He makes soap",
+    },
+    {
+      text: "We goto a bar",
+    },
+    {
+      text: "Start a fight",
+    },
+    {
+      text: "We like it",
+    },
+    {
+      text: "Welcome to F**** C***",
+    },
+  ];
+  useEffect(()=>{
+    dispatch(setLoading(true));
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+    },8000)
+  },[])  
   return (
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
+      <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
       <div className="mt-[70px] px-[10px]">
         <PageSpecs {...{ defaultLangChoice, setDefaultLangChoice, setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
         <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
@@ -211,7 +251,7 @@ const Home: React.FC<HomeProps> = () => {
             </div>
               : <></>
           }
-          {/* <div style={{ marginBottom: "4rem", textAlign: "center" }}>
+          <div style={{ marginBottom: "4rem", textAlign: "center" }}>
             <h4 style={{ marginBottom: 16 }}>{count}</h4>
             <h4 style={{ marginBottom: 16 }}>{name}</h4>
             <h4 style={{ marginBottom: 16 }}>{supportingLangs.length}..</h4>
@@ -227,7 +267,7 @@ const Home: React.FC<HomeProps> = () => {
               decrement
             </button>
             <button onClick={() => dispatch(reset())}>reset</button>
-          </div> */}
+          </div>
         </div>
       </div>
     </main>

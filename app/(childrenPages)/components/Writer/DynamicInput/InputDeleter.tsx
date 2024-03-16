@@ -39,10 +39,19 @@ interface InputSelectorProps {
             </AlertDialogCancel>
             <AlertDialogAction
             onClick={()=>{
+              const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
               setMultiLangInputList((prevInputList: any) => {
                     const updatedInputs = prevInputList.filter((_:any, i: number) => i !== index);
                     return updatedInputs;
                   });
+
+                  multiLangInputList.length === 1 && localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
+                    ...localObj,
+                    current_page_data: {
+                      ...localObj.current_page_data,
+                      multiLangInputList: []
+                    }
+                  }));
                   
             }}
             >Continue</AlertDialogAction>

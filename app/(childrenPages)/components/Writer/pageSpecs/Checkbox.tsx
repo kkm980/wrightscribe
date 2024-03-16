@@ -28,7 +28,7 @@ interface CheckboxWrapperProps {
 }
 
 const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr }) => {
-  
+
 
   return (
     <Form {...form}>
@@ -54,11 +54,33 @@ const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang,
                             checked={item.default === true ? true : supportingLang.includes(item.id)}
                             disabled={item.default === true}
                             onCheckedChange={(checked) => {
-                              return checked
-                                ? (setSupportingLang([...supportingLang, item.id]), addLangInMultiLangArr(item.id))
-                                : setSupportingLang(
-                                  supportingLang.filter((value: any) => value !== item.id), potentialDeleteLangInMultiLangArr(item.id)
-                                );
+
+                              // alright, it needs attention to understand why we are doing localStorage setting here.
+                              // on the page.tsx i.e main page when we are doing the setLocalStorage on supportingLanguage array change, it is
+                              // seting bydefault to ["english"] only. so, there we have made condition that when there is length of supportingLang
+                              // array greater than 1 then only set the local storage and here we are doing the check to 
+                              // set localstorage only if there were two items in supportingLang array. why 2? bcz setSupportingLang is async.
+                              // here set localstorage fun. will be called before setLang is called.
+                              // i.e if in supportingLang array, there are elements- ["english", "arabic", "thai"] 
+                              // and we are unchecking "thai" then setlocalstorage function on Page.tsx will be called
+                              // and if and only if we are deleting the second last element (one extra language after english)
+                              // then only set localstorage will be called here.
+                              const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
+                              if(!checked){
+                                return setSupportingLang(
+                                  supportingLang.filter((value: any) => value !== item.id)),
+                                potentialDeleteLangInMultiLangArr(item.id),
+                                supportingLang.length === 2 &&
+                                localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
+                                  ...localObj,
+                                  current_page_data: {
+                                    ...localObj.current_page_data,
+                                    supportingLang: ["english"]
+                                  }
+                                }))
+                              } else {
+                                return (setSupportingLang([...supportingLang, item.id]), addLangInMultiLangArr(item.id))
+                              }
                             }}
                           />
 
@@ -87,7 +109,7 @@ interface ContainerProps {
   addLangInMultiLangArr: any;
   potentialDeleteLangInMultiLangArr: any;
 }
-const CheckboxWrapperContainer: React.FC<ContainerProps> = ({supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr}) => {
+const CheckboxWrapperContainer: React.FC<ContainerProps> = ({ supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -95,7 +117,7 @@ const CheckboxWrapperContainer: React.FC<ContainerProps> = ({supportingLang, set
     },
   });
 
-  return <CheckboxWrapper {...{form, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr}} />;
+  return <CheckboxWrapper {...{ form, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr }} />;
 }
 
 export default CheckboxWrapperContainer;
