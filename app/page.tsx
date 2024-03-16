@@ -154,8 +154,7 @@ const Home: React.FC<HomeProps> = () => {
       }
       return !langExists?element:{...element, multiLangText:newElArr};
     });
-    console.log("fin", updatedArr);
-    // setMultiLangInputList(updatedArr);
+    setMultiLangInputList(updatedArr);
   }
 
   const potentialDeleteLangInMultiLangArr = (lang: string) => {
@@ -187,9 +186,6 @@ const Home: React.FC<HomeProps> = () => {
           multiLangInputList: [...multiLangInputList]
         }
       }));
-
-      console.log("finnnn", multiLangInputList);
-
   }, [multiLangInputList]);
   const count = useAppSelector((state) => state.counterReducer.count);
   const name = useAppSelector((state) => state.counterReducer.name);

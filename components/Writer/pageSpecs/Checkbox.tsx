@@ -66,9 +66,8 @@ const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang,
                               // and if and only if we are deleting the second last element (one extra language after english)
                               // then only set localstorage will be called here.
                               const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
-                              return checked
-                                ? (setSupportingLang([...supportingLang, item.id]), addLangInMultiLangArr(item.id))
-                                : setSupportingLang(
+                              if(!checked){
+                                return setSupportingLang(
                                   supportingLang.filter((value: any) => value !== item.id)),
                                 potentialDeleteLangInMultiLangArr(item.id),
                                 supportingLang.length === 2 &&
@@ -78,7 +77,10 @@ const CheckboxWrapper: React.FC<CheckboxWrapperProps> = ({ form, supportingLang,
                                     ...localObj.current_page_data,
                                     supportingLang: ["english"]
                                   }
-                                }));
+                                }))
+                              } else {
+                                return (setSupportingLang([...supportingLang, item.id]), addLangInMultiLangArr(item.id))
+                              }
                             }}
                           />
 
