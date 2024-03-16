@@ -57,26 +57,6 @@ const Home: React.FC<HomeProps> = () => {
       }));
   }, [supportingLang]);
 
-
-
-  useEffect(() => {
-    const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
-    multiLangInputList.length != 0 &&
-      localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
-        ...localObj,
-        current_page_data: {
-          ...localObj.current_page_data,
-          multiLangInputList: [...multiLangInputList]
-        }
-      }));
-
-  }, [multiLangInputList]);
-
-
-
-
-
-
   // function is called whenever user creates a new field
   const handleAddInput = (obj: any): void => {
     // const newInputArr=[...inputList];
@@ -143,20 +123,23 @@ const Home: React.FC<HomeProps> = () => {
   }
 
   const addLangInMultiLangArr = (lang: string) => {
-    let updatedArr = [...multiLangInputList];
-    updatedArr = multiLangInputList.map((element: any) => {
+    let updatedArr = multiLangInputList.map((element: any) => {
       const langExists = element.multiLangText.some(
         (obj: any) => obj.language === lang
       );
+      let newElArr:any=[];
       if (langExists) {
-        element.multiLangText.forEach((obj: any) => {
+        element.multiLangText.map((obj: any) => {
           if (obj.language === lang) {
-             obj.show=true;
-             console.log(obj.show, "elee1");
+            obj.show=true;
+            newElArr.push({...obj , show: true})
+          }
+          else{
+            newElArr.push({...obj});
           }
         });
-        console.log("elee2",element.multiLangText[1].show);
-      } else {
+      }
+      else {
         element.multiLangText.push({
           ...Object.entries(element.multiLangText[0] || {}).reduce(
             (acc: any, [key, value]) => {
@@ -169,12 +152,10 @@ const Home: React.FC<HomeProps> = () => {
           ),
         });
       }
-
-      console.log(element, "fin");
-      return element;
+      return !langExists?element:{...element, multiLangText:newElArr};
     });
-
-    setMultiLangInputList(updatedArr);
+    console.log("fin", updatedArr);
+    // setMultiLangInputList(updatedArr);
   }
 
   const potentialDeleteLangInMultiLangArr = (lang: string) => {
@@ -196,6 +177,20 @@ const Home: React.FC<HomeProps> = () => {
 
     setMultiLangInputList(updatedArr);
   }
+  useEffect(() => {
+    const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
+    multiLangInputList.length != 0 &&
+      localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
+        ...localObj,
+        current_page_data: {
+          ...localObj.current_page_data,
+          multiLangInputList: [...multiLangInputList]
+        }
+      }));
+
+      console.log("finnnn", multiLangInputList);
+
+  }, [multiLangInputList]);
   const count = useAppSelector((state) => state.counterReducer.count);
   const name = useAppSelector((state) => state.counterReducer.name);
   const supportingLangs = useAppSelector((state) => state.counterReducer.supportingLangs);
