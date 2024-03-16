@@ -192,7 +192,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
             <Droppable droppableId="characters">
               {(provided) => (
                 <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                  {multiLangInputList.map((e: any, ind: number) => (
+                  {multiLangInputList?.map((e: any, ind: number) => (
                     <Draggable key={e.id} draggableId={e.id} index={ind}>
                       {(provided) => (
                         <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}

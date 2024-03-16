@@ -11,15 +11,19 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react';
 import { decrement, increment, reset, addName, setSupportingLangs, setLoading, setMultiLangInputListStore } from "@/redux/features/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useRouter } from 'next/navigation';
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
-import { IconSquareRoundedX } from "@tabler/icons-react";
-
-
 interface HomeProps {
   // Add any additional props if needed
 }
 
-const Home: React.FC<HomeProps> = () => {
+const Home = ({
+  params,
+}: {
+  params: {
+    slug: string
+  }
+}) => {
 
   const { theme, setTheme } = useTheme();
   const [supportingLang, setSupportingLang] = useState<string[]>(["english"]);
@@ -33,25 +37,26 @@ const Home: React.FC<HomeProps> = () => {
   const name = useAppSelector((state) => state.counterReducer.name);
   const supportingLangs = useAppSelector((state) => state.counterReducer.supportingLangs);
   const loading = useAppSelector((state) => state.counterReducer.loading);
-  const multiLangInputListStore = useAppSelector((state) => state.counterReducer.multiLangInputListStore);
+  const multiLangInputListStore: any = useAppSelector((state) => state.counterReducer.multiLangInputListStore);
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
 
   useEffect(() => {
-    const x = localStorage.getItem("wright_scribe_persistent_data");
-    if (x) {
-      const supportingLang_local = JSON.parse(x)?.current_page_data?.supportingLang;
-      if (supportingLang_local) {
-        // setSupportingLang(supportingLang_local);
-        supportingLang_local?.includes("english") ? setSupportingLang(supportingLang_local) : setSupportingLang([...supportingLang_local, "english"]);
-      }
+    // const x = localStorage.getItem("wright_scribe_persistent_data");
+    // if (x) {
+    //   const supportingLang_local = JSON.parse(x)?.current_page_data?.supportingLang;
+    //   if (supportingLang_local) {
+    //     // setSupportingLang(supportingLang_local);
+    //     supportingLang_local?.includes("english") ? setSupportingLang(supportingLang_local) : setSupportingLang([...supportingLang_local, "english"]);
+    //   }
 
 
-      const multiLangInputList_local = JSON.parse(x)?.current_page_data?.multiLangInputList;
-      if (multiLangInputList_local) {
-        setMultiLangInputList(multiLangInputList_local);
-      }
-    }
+    //   const multiLangInputList_local = JSON.parse(x)?.current_page_data?.multiLangInputList;
+    //   if (multiLangInputList_local) {
+    //     setMultiLangInputList(multiLangInputList_local);
+    //   }
+    // }
+
   }, []);
 
   // setting localStorage on any state changes
@@ -60,8 +65,8 @@ const Home: React.FC<HomeProps> = () => {
     supportingLang.length > 1 &&
       localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
         ...localObj,
-        current_page_data: {
-          ...localObj.current_page_data,
+        [params.slug]: {
+          ...localObj[params.slug],
           supportingLang: [...supportingLang]
         }
       }));
@@ -133,7 +138,7 @@ const Home: React.FC<HomeProps> = () => {
   }
 
   const addLangInMultiLangArr = (lang: string) => {
-    let updatedArr = multiLangInputList.map((element: any) => {
+    let updatedArr = multiLangInputList?.map((element: any) => {
       const langExists = element.multiLangText.some(
         (obj: any) => obj.language === lang
       );
@@ -168,7 +173,7 @@ const Home: React.FC<HomeProps> = () => {
   }
 
   const potentialDeleteLangInMultiLangArr = (lang: string) => {
-    const updatedArr = multiLangInputList.map((element: any) => {
+    const updatedArr = multiLangInputList?.map((element: any) => {
       const langExists = element.multiLangText.some(
         (obj: any) => obj.language === lang
       );
@@ -188,61 +193,79 @@ const Home: React.FC<HomeProps> = () => {
   }
   useEffect(() => {
     const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
-    multiLangInputList.length != 0 &&
+    multiLangInputList?.length != 0 &&
       localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
         ...localObj,
-        current_page_data: {
-          ...localObj.current_page_data,
+        [params.slug]: {
+          ...localObj[params.slug],
           multiLangInputList: [...multiLangInputList]
         }
       }));
-      dispatch(setMultiLangInputListStore({main:[...multiLangInputList]}));
+    console.log(multiLangInputList, "fist")
   }, [multiLangInputList]);
 
   const loadingStates = [
     {
-      text: "Buying a condo",
+      text: "Writing",
     },
     {
-      text: "Travelling in a flight",
+      text: "Scribing",
     },
     {
-      text: "Meeting Tyler Durden",
+      text: "Writing your right scribes as WrightScribe",
     },
     {
-      text: "He makes soap",
-    },
-    {
-      text: "We goto a bar",
-    },
-    {
-      text: "Start a fight",
-    },
-    {
-      text: "We like it",
-    },
-    {
-      text: "Welcome to F**** C***",
-    },
+      text: "Alright ?",
+    }
   ];
   useEffect(()=>{
-    dispatch(setLoading(true));
+    // dispatch(setLoading(true));
+    setTimeout(()=>{
+      const localObj = JSON.parse(localStorage.getItem("wright_scribe_persistent_data") || '{}');
+    multiLangInputList?.length != 0 &&
+      localStorage.setItem("wright_scribe_persistent_data", JSON.stringify({
+        ...localObj,
+        [params.slug]: {
+          ...localObj[params.slug],
+          multiLangInputList: [...multiLangInputList]
+        }
+      }));
+    if(localObj[params.slug]?.multiLangInputList){
+      setMultiLangInputList([...localObj[params.slug].multiLangInputList])
+    } else {
+      const pageData:any = multiLangInputListStore?.[params.slug]||"";
+      if(!pageData || pageData.length ===0){
+        dispatch(setLoading(false));
+        router.push(`/`);
+      } else {
+        setMultiLangInputList(pageData);
+      }
+    }
+    }, 1000);
     setTimeout(()=>{
       dispatch(setLoading(false));
-    },8000)
-  },[])  
+    },3000);
+  },[])
+
+  function migrate(){
+    if(params.slug !== slug && slug.length>=4){
+      dispatch(setMultiLangInputListStore({...multiLangInputListStore, [slug]:[...multiLangInputList]}));
+      router.push(`/${slug}`);
+    }
+  }
   return (
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
-      <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
+      <Loader loadingStates={loadingStates} loading={loading} duration={800} />
       <div className="mt-[70px] px-[10px]">
-        <PageSpecs {...{ defaultLangChoice, setDefaultLangChoice, setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug }} />
-        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
+        <PageSpecs {...{ defaultLangChoice, setDefaultLangChoice, setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug, migrate }} />
+        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList?.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
+          <div>{params.slug}vvvvv</div>
             <DynamicInputForm {...{ multiLangInputList, setMultiLangInputList, multiLang }} />
             <InputSelector {...{ handleAddInput, multiLangInputList }} />
           </div>
           {
-            multiLangInputList.length > 0 ? <div className='sticky top-[80px] right-[0px] flex flex-col'>
+            multiLangInputList?.length > 0 ? <div className='sticky top-[80px] right-[0px] flex flex-col'>
               <MultiLangSelector {...{ multiLang, setMultiLang }} />
               <Button variant="save" className='mb-2'>Save</Button>
               <Button variant="copy" className='mb-2'>Clone</Button>

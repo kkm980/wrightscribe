@@ -12,7 +12,7 @@ const initialState = {
     supportingLangs: ["m"],
     name: "ram",
     count: 0,
-    loading: false,
+    loading: true,
 } as CounterState;
 
 export const counter = createSlice({
@@ -44,7 +44,8 @@ export const counter = createSlice({
       state.loading = action.payload;
     },
     setMultiLangInputListStore: (state, action: PayloadAction<any>) => {
-      state.multiLangInputListStore = [...action.payload];
+      console.log("fist", action.payload);
+      state.multiLangInputListStore = {...action.payload};
     },
   },
 });

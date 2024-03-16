@@ -39,7 +39,7 @@ const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput, multiLang
           
 
           <Button variant="outline" onClick={handleOpenDialog} className="z-10 relative">
-            Create field{" "}{multiLangInputList.length === 0 ?<div className="ml-1 absolute right-0 -top-1"><Ping/></div>:<></>}
+            Create field{" "}{multiLangInputList?.length === 0 ?<div className="ml-1 absolute right-0 -top-1"><Ping/></div>:<></>}
           </Button>
         {/* </div> */}
         

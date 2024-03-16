@@ -19,7 +19,8 @@ import TooltipBox from "@/components/Common/Tooltip";
 import { Badge } from "@/components/ui/badge";
 import languages from "@/constants/languageConstants";
 import FallBackSelector from "./FallBackSelector";
-
+import { decrement, increment, reset, addName, setSupportingLangs, setLoading, setMultiLangInputListStore } from "@/redux/features/counterSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 interface PageSpecsProps {
   // Add any necessary props here
@@ -31,11 +32,17 @@ interface PageSpecsProps {
   potentialDeleteLangInMultiLangArr: any;
   defaultLangChoice:any;
   setDefaultLangChoice: any;
+  migrate?: any;
 }
-const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangChoice, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug}) => {
+const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangChoice, supportingLang, setSupportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug, migrate}) => {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  const count = useAppSelector((state) => state.counterReducer.count);
+  const name = useAppSelector((state) => state.counterReducer.name);
+  const supportingLangs = useAppSelector((state) => state.counterReducer.supportingLangs);
+  const loading = useAppSelector((state) => state.counterReducer.loading);
+  const multiLangInputListStore = useAppSelector((state) => state.counterReducer.multiLangInputListStore);
+  const dispatch = useAppDispatch();
   const handleOpenDialog = () => {
       setIsDialogOpen(true);
   };
@@ -168,7 +175,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangC
               type="submit"
               onClick={()=>{
                 handleCloseDialog();
-                router.push(`/${slug}`)
+                migrate();
               }}
             >
               Save changes
