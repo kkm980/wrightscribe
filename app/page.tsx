@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { IconSquareRoundedX } from "@tabler/icons-react";
 import { useRouter } from 'next/navigation';
+import Example from '@/components/Writer/RichText/RichText';
 
 interface HomeProps {
   // Add any additional props if needed
@@ -234,6 +235,7 @@ const Home: React.FC<HomeProps> = () => {
         <PageSpecs {...{ defaultLangChoice, setDefaultLangChoice, setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug, migrate }} />
         <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[50%] relative ${multiLangInputList?.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
+            <Example placeholder="please type!!"/>
             <DynamicInputForm {...{ multiLangInputList, setMultiLangInputList, multiLang }} />
             <InputSelector {...{ handleAddInput, multiLangInputList }} />
           </div>
