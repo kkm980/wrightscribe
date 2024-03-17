@@ -202,6 +202,9 @@ const Home: React.FC<HomeProps> = () => {
 
   const loadingStates = [
     {
+      text: "Alright",
+    },
+    {
       text: "Writing",
     },
     {
@@ -209,9 +212,6 @@ const Home: React.FC<HomeProps> = () => {
     },
     {
       text: "Writing your right scribes as WrightScribe",
-    },
-    {
-      text: "Alright ?",
     }
   ];
   useEffect(()=>{
@@ -229,25 +229,25 @@ const Home: React.FC<HomeProps> = () => {
   }
   return (
     <main className="min-h-screen h-[300vh] custom-scrollbar-container">
-      <Loader loadingStates={loadingStates} loading={loading} duration={600} />
+      <Loader loadingStates={loadingStates} loading={loading} duration={600} loop={false} />
       <div className="mt-[70px] px-[10px]">
         <PageSpecs {...{ defaultLangChoice, setDefaultLangChoice, setSupportingLang, supportingLang, addLangInMultiLangArr, potentialDeleteLangInMultiLangArr, slug, setSlug, migrate }} />
-        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[70%] relative ${multiLangInputList?.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
+        <div className={`rounded-lg flex justify-start items-start py-4 px-1 w-[50%] relative ${multiLangInputList?.length > 0 ? "border shadow-2xl" : "shadow-0"}`}>
           <div className='flex flex-col justify-start items-start w-[100%]'>
             <DynamicInputForm {...{ multiLangInputList, setMultiLangInputList, multiLang }} />
             <InputSelector {...{ handleAddInput, multiLangInputList }} />
           </div>
           {
-            multiLangInputList?.length > 0 ? <div className='sticky top-[80px] right-[0px] flex flex-col'>
+            multiLangInputList?.length > 0 ? <div className='absolute -top-[60px] right-[0px] flex'>
               <MultiLangSelector {...{ multiLang, setMultiLang }} />
-              <Button variant="save" className='mb-2'>Save</Button>
-              <Button variant="copy" className='mb-2'>Clone</Button>
-              <Button variant="delete" className='mb-2'>Delete</Button>
+              <Button variant="save" className='ml-2'>Save</Button>
+              <Button variant="copy" className='ml-2'>Clone</Button>
+              <Button variant="delete" className='ml-2'>Delete</Button>
 
             </div>
               : <></>
           }
-          <div style={{ marginBottom: "4rem", textAlign: "center" }}>
+          {/* <div style={{ marginBottom: "4rem", textAlign: "center" }}>
             <h4 style={{ marginBottom: 16 }}>{count}</h4>
             <h4 style={{ marginBottom: 16 }}>{name}</h4>
             <h4 style={{ marginBottom: 16 }}>{supportingLangs.length}..</h4>
@@ -263,7 +263,7 @@ const Home: React.FC<HomeProps> = () => {
               decrement
             </button>
             <button onClick={() => dispatch(reset())}>reset</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

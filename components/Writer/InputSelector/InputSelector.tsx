@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import InputSelectorCard from "../InputSelectorCard/InputSelectorCard";
 import Ping from "@/components/Common/Ping";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 
 interface InputSelectorProps {
   handleAddInput: any;
@@ -46,6 +47,7 @@ const InputSelector: React.FC<InputSelectorProps> = ({ handleAddInput, multiLang
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <InputSelectorCard {...{ handleSubmit, handleCloseDialog }} />
+        <BackgroundBeams />
       </DialogContent>
     </Dialog>
   );

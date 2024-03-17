@@ -21,6 +21,7 @@ import languages from "@/constants/languageConstants";
 import FallBackSelector from "./FallBackSelector";
 import { decrement, increment, reset, addName, setSupportingLangs, setLoading, setMultiLangInputListStore } from "@/redux/features/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 
 interface PageSpecsProps {
   // Add any necessary props here
@@ -73,7 +74,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangC
           <DialogHeader>
             <DialogTitle>Edit page credentials</DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col gap-4 py-4 justify-start items-start">
+          <div className="flex flex-col gap-4 py-4 justify-start items-start z-10">
             <div className="w-[100%] flex justify-between items-start p-0">
               <div className="flex flex-col justify-start items-start">
                 <Label htmlFor="name" className="text-left mb-2 flex justify-start items-center">
@@ -89,6 +90,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangC
                   />
 
                 </Label>
+                <input className="hidden" type="hidden" autoFocus={true} />
                 <Input
                   id="slug"
                   placeholder="Write Slug name"
@@ -173,6 +175,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangC
           <DialogFooter>
             <Button
               type="submit"
+              className="z-10"
               onClick={()=>{
                 handleCloseDialog();
                 migrate();
@@ -181,6 +184,7 @@ const PageSpecs: React.FC<PageSpecsProps> = ({defaultLangChoice, setDefaultLangC
               Save changes
             </Button>
           </DialogFooter>
+          <BackgroundBeams />
         </DialogContent>
       </Dialog>
     </div>

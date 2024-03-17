@@ -59,7 +59,7 @@ const InputSelectorCard: React.FC<InputSelectorCardProps> = ({
       <CardContent>
         <form>
           <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
+            <div className="flex flex-col space-y-1.5 z-10">
               <Label htmlFor="type">Type</Label>
               <Select value={selectedTextValue} onValueChange={handleSelectChange}>
                 <SelectTrigger id="type">
@@ -81,7 +81,7 @@ const InputSelectorCard: React.FC<InputSelectorCardProps> = ({
               </Select>
             </div>
             {availableTextTypes.length > 0 && (
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 z-10">
                 <CheckboxReactHookFormMultiple {...{ availableTextTypes, selectedTextValue, setSelectedType, selectedType }} />
               </div>
             )}
@@ -89,11 +89,11 @@ const InputSelectorCard: React.FC<InputSelectorCardProps> = ({
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={handleCloseDialog}>
+        <Button variant="outline" onClick={handleCloseDialog} className="z-10">
           Cancel
         </Button>
         {selectedTextValue.length>0 && 
-        <Button onClick={() => {selectedTextValue.length>0 && handleClick()}}
+        <Button className="z-10" onClick={() => {selectedTextValue.length>0 && handleClick()}}
         >
           {isEditing ? "Done" : "Create"}
         </Button>
