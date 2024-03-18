@@ -199,7 +199,7 @@ const Home: React.FC<HomeProps> = () => {
           multiLangInputList: [...multiLangInputList]
         }
       }));
-      console.log(multiLangInputList);
+      console.log(multiLangInputList, "wxy");
   }, [multiLangInputList]);
 
   const loadingStates = [

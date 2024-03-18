@@ -35,6 +35,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
     index: number,
     textValue: any,
   ) => {
+    console.log(parentIndex, index, textValue, "jipps");
     setMultiLangInputList((prevArr: any) => {
       // Create a copy of the original array
       const newArr: any = [...prevArr];
@@ -175,7 +176,11 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                   renderedElement = (
                                     <div className="group flex justify-between items-start w-[85%] m-2 mb-4 p-0 rounded-lg border-2 relative"> 
                                       <div className='absolute text-sm -top-3 left-2 hidden group-hover:block'>{ind + 1}{" "}{el.type}</div>
-                                      <RichTextEditorBox />
+                                      <RichTextEditorBox 
+                                        value={el.text}
+                                        name='text'
+                                        onChange={(e: any) => { handleMultiLangInputChange(ind, index, {...e}) }}
+                                      />
                                       <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
                                     </div>
                                   );
@@ -293,7 +298,11 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                   <div className={`group flex justify-between items-start w-[85%] m-2 mb-4 rounded-lg border-2 relative`}>
                                   <div className='absolute text-sm -top-3 left-2 hidden group-hover:block'>{el.language}</div>
                                     {/* <div className='w-[70%]'> */}
-                                      <RichTextEditorBox />
+                                      <RichTextEditorBox 
+                                        value={el.text}
+                                        name='text'
+                                        onChange={(e:any) => { handleMultiLangInputChange(ind, index, {...e}) }}
+                                      />
                                     {/* </div> */}
                                   </div>
                                 );
