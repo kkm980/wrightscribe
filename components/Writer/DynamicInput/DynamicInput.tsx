@@ -11,6 +11,7 @@ import { Input } from '@/types/inputListTypes';
 import { Input as InputBox } from "@/components/ui/input";
 import { useTheme } from 'next-themes';
 import CSDPanel from './CSDPanel';
+import RichTextEditorBox from '../RichText';
 
 interface DynamicInputFormProps {
   multiLangInputList: any;
@@ -170,6 +171,15 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                     </div>
                                   );
                                 }
+                                else if (el.type === "richText") {
+                                  renderedElement = (
+                                    <div className="group flex justify-between items-start w-[85%] m-2 mb-4 p-0 rounded-lg border-2 relative"> 
+                                      <div className='absolute text-sm -top-3 left-2 hidden group-hover:block'>{ind + 1}{" "}{el.type}</div>
+                                      <RichTextEditorBox />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
+                                    </div>
+                                  );
+                                }
                                 return (
                                   <React.Fragment key={index}>
                                     {renderedElement}
@@ -275,6 +285,16 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                     <div
                                       className='border-1 m-2 w-[65%]'
                                     />
+                                  </div>
+                                );
+                              }
+                              else if (el.type === "richText") {
+                                renderedElement = (
+                                  <div className={`group flex justify-between items-start w-[85%] m-2 mb-4 rounded-lg border-2 relative`}>
+                                  <div className='absolute text-sm -top-3 left-2 hidden group-hover:block'>{el.language}</div>
+                                    {/* <div className='w-[70%]'> */}
+                                      <RichTextEditorBox />
+                                    {/* </div> */}
                                   </div>
                                 );
                               }

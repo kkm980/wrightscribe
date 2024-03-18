@@ -1,24 +1,25 @@
 .jodit-react-container{
-    width: 100%;
+    width: 75%;
     border-radius: 25px;
     margin-bottom: 5px;
     padding-top: 10px;
 }
 
 .jodit-container{
-    border: 2px solid hsl(var(--border)) !important;
-    padding: 2px !important;
-    width: 80% !important;
+    border: 0px solid hsl(var(--border)) !important;
+    /* padding: 2px !important; */
+    width: 100% !important;
     border-radius: 5px !important;
-    margin-bottom: 5px !important;
-    padding-top: 10px !important;
-    margin-left: 10px !important;
+    /* margin-bottom: 5px !important; */
+    /* padding-top: 10px !important; */
+    /* margin-left: 10px !important; */
     background-color: hsl(var(--background)) !important;
+    cursor: pointer !important;
 }
 
 .jodit-placeholder{
     padding-left: 20px !important;
-    padding-top: 17px !important;
+    margin-top: 28px !important;
 
 }
 
@@ -35,9 +36,10 @@
 .jodit-wysiwyg {
     background-color: hsl(var(--background)) !important;
     min-height: 140px !important;
-    width: 70% !important;
-    max-width: 500px !important;
+    width: 95% !important;
+    /* max-width: 500px !important; */
     transition: border-color 0.3s ease-in-out; /* Adding transition for smooth effect */
+    margin: 20px 0 !important;
 }
 
 /* Add border color and ring on focus */
