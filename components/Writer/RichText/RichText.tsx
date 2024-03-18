@@ -1,12 +1,15 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import JoditEditor from 'jodit-react';
+import { useTheme } from 'next-themes';
+import "./richtext.css";
 
-interface ExampleProps {
+interface RichTextEditorProps {
   placeholder: string; // Define the type of placeholder
 }
 
-const Example: React.FC<ExampleProps> = ({ placeholder }) => { // Add React.FC for component type
+const RichTextEditor: React.FC<RichTextEditorProps> = ({ placeholder }) => { // Add React.FC for component type
   const editor = useRef<any>(null); // Specify the type of ref
+  const { theme, setTheme } = useTheme();
   const [content, setContent] = useState<string>(''); // Specify the type of state
   
   useEffect(()=>{
@@ -32,9 +35,9 @@ const Example: React.FC<ExampleProps> = ({ placeholder }) => { // Add React.FC f
     //   tabIndex={1}
       onBlur={handleBlur} // Pass the handleBlur function
       onChange={(newContent: string) => {}} // Define the type of newContent
-      className='text-[red] border border-[red] bg-[red]'
+      className={`${theme==="light"?"text-black":"text-white"} border border-[red] bg-[red] w-[100px]`}
     />
   );
 };
 
-export default Example; // Export the component
+export default RichTextEditor; // Export the component

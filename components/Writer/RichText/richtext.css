@@ -1,0 +1,59 @@
+.jodit-react-container{
+    width: 100%;
+    border-radius: 25px;
+    margin-bottom: 5px;
+    padding-top: 10px;
+}
+
+.jodit-container{
+    border: 2px solid hsl(var(--border)) !important;
+    padding: 2px !important;
+    width: 80% !important;
+    border-radius: 5px !important;
+    margin-bottom: 5px !important;
+    padding-top: 10px !important;
+    margin-left: 10px !important;
+    background-color: hsl(var(--background)) !important;
+}
+
+.jodit-placeholder{
+    padding-left: 20px !important;
+    padding-top: 17px !important;
+
+}
+
+.jodit-ui-group{
+    background-color: hsl(var(--background));
+}
+
+.jodit-workplace{
+    background-color: hsl(var(--background)) !important;
+    min-height: 160px !important;
+    padding: 8px !important;
+}
+
+.jodit-wysiwyg {
+    background-color: hsl(var(--background)) !important;
+    min-height: 140px !important;
+    width: 70% !important;
+    max-width: 500px !important;
+    transition: border-color 0.3s ease-in-out; /* Adding transition for smooth effect */
+}
+
+/* Add border color and ring on focus */
+.jodit-wysiwyg:focus,
+.jodit-wysiwyg:focus-within {
+    outline: none; /* Remove default focus outline */
+    border: 2px solid hsl(var(--primary)) !important; /* Change border color on focus */
+    border-radius: 10px !important;
+}
+
+
+.jodit-status-bar{
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--forground)) !important;
+}
+
+.jodit-status-bar-link{
+    display: none;
+}
