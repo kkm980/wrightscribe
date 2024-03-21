@@ -17,7 +17,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ placeholder, value, nam
   const [content, setContent] = useState<string>(''); // Specify the type of state
   
   useEffect(()=>{
-    console.log("content", content);
     onChange({name: "text", value:content});
   }, [content])
   const config = useMemo(

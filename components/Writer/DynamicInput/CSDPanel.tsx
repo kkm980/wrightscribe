@@ -11,7 +11,7 @@ interface CSDPanel {
     index: any;
     parentDataObj?:any;
   }
-const CSDPanel: React.FC<CSDPanel> = ({parentDataObj, setMultiLangInputList, multiLangInputList, el, index}) => {
+const CSDPanel: React.FC<CSDPanel> = ({setMultiLangInputList, multiLangInputList, parentDataObj, el, index}) => {
     return(
         <div className='w-[120px] cursor-pointer sticky top-[50%] right-0'>
         <Button variant="ghost"

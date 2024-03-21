@@ -35,7 +35,6 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
     index: number,
     textValue: any,
   ) => {
-    console.log(parentIndex, index, textValue, "jipps");
     setMultiLangInputList((prevArr: any) => {
       // Create a copy of the original array
       const newArr: any = [...prevArr];
@@ -103,7 +102,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                         className='border-1 m-2 w-[65%] mt-3'
                                         onChange={(e) => { handleMultiLangInputChange(ind, index, e.target) }}
                                       />
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index:ind }} />
                                     </div>
                                   );
                                 } else if (el.type === "image") {
@@ -123,7 +122,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                           onChange={(e) => { handleMultiLangInputChange(ind, index, e.target) }}
                                         />
                                       </div>
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index:ind }} />
                                     </div>
                                   );
                                 } else if (el.type === "link") {
@@ -144,7 +143,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                           onChange={(e) => { handleMultiLangInputChange(ind, index, e.target) }}
                                         />
                                       </div>
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index:ind }} />
                                     </div>
                                   );
                                 } else if (el.type === "quote") {
@@ -157,7 +156,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                         name='text'
                                         onChange={(e) => { handleMultiLangInputChange(ind, index, e.target) }}
                                       />
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index:ind }} />
                                     </div>
                                   );
                                 }
@@ -168,7 +167,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                       <div
                                         className='border-1 m-2 w-[65%]'
                                       />
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index:ind }} />
                                     </div>
                                   );
                                 }
@@ -181,7 +180,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                         name='text'
                                         onChange={(e: any) => { handleMultiLangInputChange(ind, index, {...e}) }}
                                       />
-                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index }} />
+                                      <CSDPanel {...{ setMultiLangInputList, multiLangInputList,parentDataObj:elem, el, index:ind }} />
                                     </div>
                                   );
                                 }
@@ -298,7 +297,7 @@ const DynamicInputForm: React.FC<DynamicInputFormProps> = ({ multiLangInputList,
                                   <div className={`group flex justify-between items-start w-[85%] m-2 mb-4 rounded-lg border-2 relative`}>
                                   <div className='absolute text-sm -top-3 left-2 hidden group-hover:block'>{el.language}</div>
                                     {/* <div className='w-[70%]'> */}
-                                      <RichTextEditorBox 
+                                      <RichTextEditorBox
                                         value={el.text}
                                         name='text'
                                         onChange={(e:any) => { handleMultiLangInputChange(ind, index, {...e}) }}
