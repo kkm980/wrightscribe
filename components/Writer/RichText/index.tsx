@@ -19,3 +19,36 @@ const RichTextEditorBox: React.FC<PageSpecsProps> = ({value, name, onChange}) =>
 };
 
 export default RichTextEditorBox;
+
+// import React, { useEffect, useState } from "react";
+
+// // Assuming RichTextEditor is a client-side only component
+// import RichTextEditor from "./RichText";
+
+// interface PageSpecsProps {
+//   value: any;
+//   name: any;
+//   onChange: any;
+// }
+
+// const RichTextEditorBox: React.FC<PageSpecsProps> = ({ value, name, onChange }) => {
+//   const [isClient, setIsClient] = useState(false);
+
+//   useEffect(() => {
+//     setIsClient(true);
+//   }, []); // This effect runs only once after the component mounts
+
+//   if (!isClient) {
+//     return null; // Return null if not on the client-side
+//   }
+
+//   return (
+//     <>
+//       {/* Render RichTextEditor only on the client-side */}
+//       <RichTextEditor placeholder="Type your text" {...{ value, name, onChange }} />
+//     </>
+//   );
+// };
+
+// export default RichTextEditorBox;
+

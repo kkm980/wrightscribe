@@ -14,8 +14,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { IconSquareRoundedX } from "@tabler/icons-react";
 import { useRouter } from 'next/navigation';
-import RichTextEditor from '@/components/Writer/RichText/RichText';
-import RichTextEditorBox from '@/components/Writer/RichText';
 
 interface HomeProps {
   // Add any additional props if needed
