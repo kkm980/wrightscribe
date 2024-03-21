@@ -52,7 +52,6 @@ interface InputSelectorProps {
                       multiLangInputList: []
                     }
                   }));
-              console.log(multiLangInputList,"multi", el, "el",index,"index");
             }}
             >Continue</AlertDialogAction>
           </AlertDialogFooter>

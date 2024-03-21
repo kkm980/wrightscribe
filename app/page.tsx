@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { IconSquareRoundedX } from "@tabler/icons-react";
 import { useRouter } from 'next/navigation';
+import writeScribeToFile from '@/utils/fileWriter';
 
 interface HomeProps {
   // Add any additional props if needed
@@ -197,7 +198,7 @@ const Home: React.FC<HomeProps> = () => {
           multiLangInputList: [...multiLangInputList]
         }
       }));
-      console.log(multiLangInputList, "wxy");
+      console.log("multi-text", multiLangInputList);
   }, [multiLangInputList]);
 
   const loadingStates = [
@@ -240,7 +241,11 @@ const Home: React.FC<HomeProps> = () => {
           {
             multiLangInputList?.length > 0 ? <div className='absolute -top-[60px] right-[0px] flex'>
               <MultiLangSelector {...{ multiLang, setMultiLang }} />
-              <Button variant="save" className='ml-2'>Save</Button>
+              <Button variant="save" className='ml-2' onClick={async()=>{const response = await fetch("/api/postData", {
+        method: "POST",
+        // body: JSON.stringify(data),
+      });
+      return response.json();}}>Save</Button>
               <Button variant="copy" className='ml-2'>Clone</Button>
               <Button variant="delete" className='ml-2'>Delete</Button>
 
