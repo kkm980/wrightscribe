@@ -37,11 +37,11 @@ export async function POST(request: NextRequest) {
       const existingData = fs.readFileSync(filePath);
       const parsedData = JSON.parse(existingData);
       fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-      console.log('File overwritten successfully!');
+      console.log('File overwritten successfully!', filePath);
     } else {
       // If the file doesn't exist, create it and write data to it
       fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-      console.log('File created successfully!');
+      console.log('File created successfully!', filePath);
     }
     } catch (error) {
       console.error('Error writing file:', error);
