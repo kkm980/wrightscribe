@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
     }
     return NextResponse.json({
       message: 'User created successfully',
+      path: filePath,
       success: true
     });
   } catch (error: any) {
